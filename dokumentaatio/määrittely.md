@@ -36,3 +36,7 @@ aakkoset läpi kerran. Tilavatiivudeksi pitäisi tulla O(m).
 m on kuitenkin merkittävän kokoisilla tiedostoilla paljon
 pienempi kuin n, joten näillä vaativuuksilla ei luultavasti
 ole merkitystä muilla kuin pienillä tiedostoilla.
+
+## Lähteet
+1. [http://math.mit.edu/~goemans/18310S15/huffman-notes.pdf](http://math.mit.edu/~goemans/18310S15/huffman-notes.pdf)
+2. [https://en.wikipedia.org/wiki/Huffman_coding](https://en.wikipedia.org/wiki/Huffman_coding)
