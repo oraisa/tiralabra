@@ -19,16 +19,25 @@ public class CompressedFile {
             huffmanCodes.put(character, bitPattern);
         }
         byte[] data = new byte[bytes.length - headerLength];
-        for(int i = headerLength + 1; i < bytes.length; i++){
-            data[i - headerLength - 1] = bytes[i];
+        for(int i = headerLength; i < bytes.length; i++){
+            data[i - headerLength] = bytes[i];
         }
         return new CompressedFile(huffmanCodes, data);
     }
 
     private Map<Byte, BitPattern> huffmanCodes;
+    public Map<Byte, BitPattern> getHuffmanCodes(){
+        return huffmanCodes;
+    }
+
     private byte[] data;
+    public byte[] getData(){
+        return data;
+    }
+
     private CompressedFile(Map<Byte, BitPattern> huffmanCodes, byte[] data){
         this.huffmanCodes = huffmanCodes;
         this.data = data;
     }
+
 }
