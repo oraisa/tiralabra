@@ -9,7 +9,8 @@ koodit aakkosilla. Tätä varten koodit täytyy tietysti
 kirjoittaa tiedostoon.
 
 Tavoitteena on että ainakin megatavun kokoisen tar-tiedoston,
-joka sisältää pääosin tekstiä, koko saadaan puolitettua. Algoritmin tulee kuitenkin toimia millä tahansa tiedostolla.
+joka sisältää pääosin tekstiä, koko saadaan puolitettua.
+Algoritmin tulee kuitenkin toimia millä tahansa tiedostolla.
 
 ## Tietorakenteet
 Kutakin aakkosta vastaavan koodin tallentamiseen tarvitaan
