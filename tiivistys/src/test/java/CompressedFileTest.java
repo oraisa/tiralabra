@@ -122,4 +122,23 @@ public class CompressedFileTest {
         }
     }
 
+    @Test
+    public void correctPlainDataWithTrivialEncoding(){
+        CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
+        byte[] plainData = file.getPlainData();
+        assertEquals(plainData.length, trivialEncodingWithData.length - 3 * 256);
+        for(int i = 0; i < plainData.length; i++){
+            assertEquals("At index " + i, 6, plainData[i]);
+        }
+    }
+
+    @Test
+    public void correctPlainDataWithFlippedEncoding(){
+        CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
+        byte[] plainData = file.getPlainData();
+        assertEquals(plainData.length, trivialEncodingWithData.length - 3 * 256);
+        for(int i = 0; i < plainData.length; i++){
+            assertEquals("At index " + i, (byte)255, plainData[i]);
+        }
+    }
 }
