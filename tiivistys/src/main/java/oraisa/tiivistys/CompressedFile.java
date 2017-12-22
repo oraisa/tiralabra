@@ -9,14 +9,14 @@ public class CompressedFile {
         int characters = 256;
         int headerLength = 3 * characters;
 
-        Map<Byte, BitPattern> huffmanCodes = new HashMap<Byte, BitPattern>();
+        BitPattern[] huffmanCodes = new BitPattern[characters];
         for(int i = 0; i < characters; i++){
             int j = i * 3;
             byte character = bytes[j];
             byte bitsInPattern = bytes[j + 1];
             byte pattern = bytes[j + 2];
-            BitPattern bitPattern = new BitPattern(pattern, bitsInPattern);
-            huffmanCodes.put(character, bitPattern);
+            BitPattern bitPattern = new BitPattern(pattern, bitsInPattern, character);
+            huffmanCodes[i] = bitPattern;
         }
         byte[] data = new byte[bytes.length - headerLength];
         for(int i = headerLength; i < bytes.length; i++){
@@ -25,8 +25,8 @@ public class CompressedFile {
         return new CompressedFile(huffmanCodes, data);
     }
 
-    private Map<Byte, BitPattern> huffmanCodes;
-    public Map<Byte, BitPattern> getHuffmanCodes(){
+    private BitPattern[] huffmanCodes;
+    public BitPattern[] getHuffmanCodes(){
         return huffmanCodes;
     }
 
@@ -35,9 +35,13 @@ public class CompressedFile {
         return data;
     }
 
-    private CompressedFile(Map<Byte, BitPattern> huffmanCodes, byte[] data){
+    private CompressedFile(BitPattern[] huffmanCodes, byte[] data){
         this.huffmanCodes = huffmanCodes;
         this.data = data;
+    }
+
+    public byte[] getPlainData(){
+        return null;
     }
 
 }

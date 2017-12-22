@@ -12,11 +12,11 @@ import java.util.*;
 
 
 public class CompressedFileTest {
-    
+
     byte[] trivialBytes;
     byte[] flippedBytes;
     byte[] trivialEncodingWithData;
-    
+
     public CompressedFileTest() {
     }
 
@@ -32,7 +32,7 @@ public class CompressedFileTest {
     public void setUp() {
         trivialBytes = new byte[1000];
         flippedBytes = new byte[1000];
-        trivialEncodingWithData = new byte[1000]; 
+        trivialEncodingWithData = new byte[1000];
         for(int i = 0; i < 256; i++){
             int j = i * 3;
             trivialBytes[j] = (byte)i;
@@ -66,22 +66,19 @@ public class CompressedFileTest {
 
     @Test
     public void correctHuffmanCodesForTrivialEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(trivialBytes);
-        Map<Byte, BitPattern> huffmanCodes = file.getHuffmanCodes();
-        for(Byte key: huffmanCodes.keySet()){
-            BitPattern pattern = huffmanCodes.get(key);
-            assertEquals((byte)key, pattern.getPattern());
-            assertEquals(8, pattern.getBitsInPattern());
-        }
+        testHuffmanCodesWithTrivialEncoding(trivialBytes);
     }
-    
+
     @Test
     public void correctHuffmanCodesForTrivialEncodingWithData(){
-        CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
-        Map<Byte, BitPattern> huffmanCodes = file.getHuffmanCodes();
-        for(Byte key: huffmanCodes.keySet()){
-            BitPattern pattern = huffmanCodes.get(key);
-            assertEquals((byte)key, pattern.getPattern());
+        testHuffmanCodesWithTrivialEncoding(trivialEncodingWithData);
+    }
+
+    private void testHuffmanCodesWithTrivialEncoding(byte[] bytes){
+        CompressedFile file = CompressedFile.fromBytes(bytes);
+        BitPattern[] huffmanCodes = file.getHuffmanCodes();
+        for(BitPattern pattern: huffmanCodes){
+            assertEquals(pattern.getReplacement(), pattern.getPattern());
             assertEquals(8, pattern.getBitsInPattern());
         }
     }
@@ -89,10 +86,9 @@ public class CompressedFileTest {
     @Test
     public void correctHuffmanCodesForFlippedEncoding(){
         CompressedFile file = CompressedFile.fromBytes(flippedBytes);
-        Map<Byte, BitPattern> huffmanCodes = file.getHuffmanCodes();
-        for(Byte key: huffmanCodes.keySet()){
-            BitPattern pattern = huffmanCodes.get(key);
-            assertEquals((byte)255 - key, pattern.getPattern());
+        BitPattern[] huffmanCodes = file.getHuffmanCodes();
+        for(BitPattern pattern: huffmanCodes){
+            assertEquals((byte)255 - pattern.getReplacement(), pattern.getPattern());
             assertEquals(8, pattern.getBitsInPattern());
         }
     }
@@ -110,7 +106,7 @@ public class CompressedFileTest {
     public void correctDataForTrivialEncodingWithData(){
         CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
         byte[] data = file.getData();
-        assertEquals(data.length, trivialBytes.length - 3 * 256);
+        assertEquals(data.length, trivialEncodingWithData.length - 3 * 256);
         for(int i = 0; i < data.length; i++){
             assertEquals("At index " + i, 6, data[i]);
         }
@@ -125,4 +121,5 @@ public class CompressedFileTest {
             assertEquals("At index " + i, 0, data[i]);
         }
     }
+
 }
