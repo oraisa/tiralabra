@@ -23,4 +23,8 @@ public class BitPattern {
         this.bitsInPattern = bitsInPattern;
         this.replacement = replacement;
     }
+
+    public BitPattern(int pattern, int bitsInPattern, int replacement){
+        this((byte)pattern, (byte)bitsInPattern, (byte)replacement);
+    }
 }
