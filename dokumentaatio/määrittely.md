@@ -16,7 +16,8 @@ Algoritmin tulee kuitenkin toimia millä tahansa tiedostolla.
 Kutakin aakkosta vastaavan koodin tallentamiseen tarvitaan
 HashMap. Huffman-koodien määrittämisessä käytetään puuta,
 mutta sitä ei välttämättä tarvitse toteuttaa erillisenä
-tietorakenteena.
+tietorakenteena. Näiden lisäksi ArrayList saattaa olla
+hyödyllinen.
 
 ## Syöte ja tuloste
 Ohjelma saa joko syötteenä tiivistettävän tiedoston ja
@@ -27,7 +28,7 @@ tiedoston ja tulostaa alkuperäisen tiedoston.
 Sekä tiedoston tiivistämisen että palauttamisen pitäisi
 onnistua ajassa O(n) ja tilassa O(n), kun n on tiedoston
 koko. Tiivistäessä tiedosto täytyy käydä läpi kaksi kertaa,
-ja palauttaessa kerran.
+ja palautettaessa kerran.
 
 Tiivistämisessä tehtävän Huffman-koodien määrityksen
 aika- ja tilavaativuudet riippuvat aakkosten määrästä.
