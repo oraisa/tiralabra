@@ -41,6 +41,16 @@ public class CompressedFile {
     }
 
     public byte[] getPlainData(){
+        ArrayList<Byte> plainData = new ArrayList<Byte>();
+        BitMatcher matcher = new BitMatcher(data);
+        while(true){
+            for(BitPattern pattern: huffmanCodes){
+                if(matcher.matchBitPattern(pattern)){
+                    plainData.add(pattern.replacement);
+                    break;
+                }
+            }
+        }
         return null;
     }
 
