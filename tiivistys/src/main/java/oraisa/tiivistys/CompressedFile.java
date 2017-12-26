@@ -50,8 +50,13 @@ public class CompressedFile {
                     break;
                 }
             }
+            break; //TODO: have BitMatcher tell when the file has ended.
         }
-        return null;
+        byte[] plainDataArray = new byte[plainData.size()];
+        for(int i = 0; i < plainDataArray.length; i++){
+            plainDataArray[i] = plainData.get(i);
+        }
+        return plainDataArray;
     }
 
 }
