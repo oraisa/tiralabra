@@ -46,7 +46,7 @@ public class CompressedFile {
         while(true){
             for(BitPattern pattern: huffmanCodes){
                 if(matcher.matchBitPattern(pattern)){
-                    plainData.add(pattern.replacement);
+                    plainData.add(pattern.getReplacement());
                     break;
                 }
             }
