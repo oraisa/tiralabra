@@ -38,4 +38,19 @@ public class BitPattern {
         }
         return new BitPattern((pattern << 1) + bit, bitsInPattern + 1, replacement);
     }
+    
+    @Override
+    public String toString(){
+        int fixedPattern = pattern;
+        //Don't consider the pattern signed.
+        if(pattern < 0){
+            fixedPattern = pattern - Byte.MIN_VALUE * 2;
+        }
+        String withoutLeadingZeros = Integer.toString(fixedPattern, 2);
+        String leadingZeros = "";
+        for(int i = 0; i < bitsInPattern - withoutLeadingZeros.length(); i++){
+            leadingZeros += "0";
+        }
+        return leadingZeros + withoutLeadingZeros;
+    }
 }

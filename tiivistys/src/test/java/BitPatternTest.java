@@ -23,11 +23,13 @@ public class BitPatternTest {
     BitPattern fullPattern;
     BitPattern oneBitPattern;
     BitPattern twoBitPattern;
+    BitPattern withLeadingZero;
     @Before
     public void setUp() {
         fullPattern = new BitPattern((byte)0xFF, 8, 0);
         oneBitPattern = new BitPattern(1, 1, 4);
         twoBitPattern = new BitPattern(2, 2, 5);
+        withLeadingZero = new BitPattern(1, 2, 5);
     }
     
     @After
@@ -83,5 +85,25 @@ public class BitPatternTest {
     public void addBitDoesntChangeReplacement(){
         BitPattern pattern = oneBitPattern.addBit((byte)1);
         assertEquals(oneBitPattern.getReplacement(), pattern.getReplacement());
+    }
+    
+    @Test
+    public void oneBitPatternHasCorrectToString(){
+        assertEquals("1", oneBitPattern.toString());
+    }
+    
+    @Test
+    public void twoBitPatternHasCorrectToString(){
+        assertEquals("10", twoBitPattern.toString());
+    }
+    
+    @Test
+    public void fullPatternHasCorrectToString(){
+        assertEquals("11111111", fullPattern.toString());
+    }
+    
+    @Test
+    public void patternWithLeadingZeroHasCorrectToString(){
+        assertEquals("01", withLeadingZero.toString());
     }
 }
