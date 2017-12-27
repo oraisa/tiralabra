@@ -65,13 +65,17 @@ public class CompressedFile {
         ArrayList<Byte> plainData = new ArrayList<Byte>();
         BitMatcher matcher = new BitMatcher(data);
         while(true){
+            boolean matchedPattern = false;
             for(BitPattern pattern: huffmanCodes){
                 if(matcher.matchBitPattern(pattern)){
                     plainData.add(pattern.getReplacement());
+                    matchedPattern = true;
                     break;
                 }
             }
-            break; //TODO: have BitMatcher tell when the file has ended.
+            if(!matchedPattern){
+                break;
+            }
         }
         byte[] plainDataArray = new byte[plainData.size()];
         for(int i = 0; i < plainDataArray.length; i++){
