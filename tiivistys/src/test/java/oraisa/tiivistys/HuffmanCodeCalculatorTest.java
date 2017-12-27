@@ -64,9 +64,9 @@ public class HuffmanCodeCalculatorTest {
                 BitMatcher matcher = new BitMatcher(patternByte);
                 for(BitPattern otherPattern: huffmanCodes){
                     if(otherPattern != null && otherPattern != pattern){
-                        assertEquals("Patterns " + pattern.toString() + " and " + 
+                        assertFalse("Patterns " + pattern.toString() + " and " + 
                                 otherPattern.toString(),
-                                false, matcher.matchBitPattern(otherPattern));
+                                matcher.matchBitPattern(otherPattern));
                     }
                 }
             }

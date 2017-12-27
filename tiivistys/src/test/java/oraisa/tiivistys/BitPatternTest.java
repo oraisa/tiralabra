@@ -46,7 +46,7 @@ public class BitPatternTest {
         } catch(IllegalStateException e){
             exceptionCaught = true;
         }
-        assertEquals("addBit should throw IllegalStateException.", true, exceptionCaught);
+        assertTrue("addBit should throw IllegalStateException.", exceptionCaught);
     }
     @Test
     public void addBitDoesntAllowAddingNegativeBit(){
@@ -56,7 +56,7 @@ public class BitPatternTest {
         } catch(IllegalArgumentException  e){
             exceptionCaught = true;
         }
-        assertEquals("addBit should throw IllegalArgumentException.", true, exceptionCaught);
+        assertTrue("addBit should throw IllegalArgumentException.", exceptionCaught);
     }
     @Test
     public void addBitDoesntAllowAdding2Bit(){
@@ -66,7 +66,7 @@ public class BitPatternTest {
         } catch(IllegalArgumentException e){
             exceptionCaught = true;
         }
-        assertEquals("addBit should throw IllegalArgumentException.", true, exceptionCaught);
+        assertTrue("addBit should throw IllegalArgumentException.", exceptionCaught);
     }
     
     @Test
