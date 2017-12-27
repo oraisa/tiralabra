@@ -33,7 +33,7 @@ public class HuffmanCodeCalculator {
             traverseHuffmanTree(huffmanCodes, node.getLeftChild(), currentPattern.addBit((byte)0));
             traverseHuffmanTree(huffmanCodes, node.getRightChild(), currentPattern.addBit((byte)1));
         } else {
-            huffmanCodes[node.getValue()] = new BitPattern(currentPattern.getPattern(), 
+            huffmanCodes[node.getValue() - Byte.MIN_VALUE] = new BitPattern(currentPattern.getPattern(), 
                     currentPattern.getBitsInPattern(), node.getValue());
         }
     }
