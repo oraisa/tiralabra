@@ -45,6 +45,14 @@ public class HuffmanCodeCalculatorTest {
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void huffmanCodeCalculatorHasEncodingForAllCharacters(){
+        BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(exampleFrequencies);
+        for(int i = 1; i < exampleOptimalEncodingLengths.length; i++){
+            assertNotNull("Encoding for " + i + ": ", huffmanCodes[i - Byte.MIN_VALUE]);
+        }
+    }
 
     @Test
     public void huffmanCodeCalculatorGivesAPrefixEncodingWithExample(){

@@ -24,12 +24,14 @@ public class BitPatternTest {
     BitPattern oneBitPattern;
     BitPattern twoBitPattern;
     BitPattern withLeadingZero;
+    BitPattern zeroPattern;
     @Before
     public void setUp() {
         fullPattern = new BitPattern((byte)0xFF, 8, 0);
         oneBitPattern = new BitPattern(1, 1, 4);
         twoBitPattern = new BitPattern(2, 2, 5);
         withLeadingZero = new BitPattern(1, 2, 5);
+        zeroPattern = new BitPattern(0, 1, 5);
     }
     
     @After
@@ -105,5 +107,10 @@ public class BitPatternTest {
     @Test
     public void patternWithLeadingZeroHasCorrectToString(){
         assertEquals("01", withLeadingZero.toString());
+    }
+    
+    @Test
+    public void zeroPatternHasCorrectToString(){
+        assertEquals("0", zeroPattern.toString());
     }
 }
