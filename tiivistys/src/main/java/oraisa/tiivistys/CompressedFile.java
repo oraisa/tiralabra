@@ -3,8 +3,16 @@ package oraisa.tiivistys;
 
 import java.util.*;
 
+/**
+ * Represents compressed data. Can be used to uncompress the data.
+ */
 public class CompressedFile {
 
+    /**
+     * Create a representation of compressed data.
+     * @param bytes An array of bytes with the compressed data.
+     * @return The object representing the compressed data.
+     */
     public static CompressedFile fromBytes(byte[] bytes){
         int characters = 256;
         int headerLength = 3 * characters;
@@ -26,11 +34,20 @@ public class CompressedFile {
     }
 
     private BitPattern[] huffmanCodes;
+    /**
+     * Returns the Huffman codes used to encode the compressed data.
+     * @return An array of BitPatterns where each pattern has the encoding of
+     * a single byte.
+     */
     public BitPattern[] getHuffmanCodes(){
         return huffmanCodes;
     }
 
     private byte[] data;
+    /**
+     * Gets the compressed data without the header.
+     * @return An array of bytes with the compressed data.
+     */
     public byte[] getData(){
         return data;
     }
@@ -40,6 +57,10 @@ public class CompressedFile {
         this.data = data;
     }
 
+    /**
+     * Decodes the compressed data and return the uncompressed data.
+     * @return An array of bytes with the uncompressed data.
+     */
     public byte[] getPlainData(){
         ArrayList<Byte> plainData = new ArrayList<Byte>();
         BitMatcher matcher = new BitMatcher(data);

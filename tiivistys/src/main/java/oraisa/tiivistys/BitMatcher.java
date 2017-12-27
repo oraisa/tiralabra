@@ -1,14 +1,32 @@
 
 package oraisa.tiivistys;
 
+/**
+ * A matcher for matching BitPatterns against given binary data.
+ * @see BitPattern
+ */
 public class BitMatcher {
     private byte[] bytes;
     private long bitPosition = 0;
 
+    /**
+     * Class constructor.
+     * @param bytes An array of bytes representing the binary data this object
+     *              matches BitPatterns against.
+     */
     public BitMatcher(byte[] bytes){
         this.bytes = bytes;
     }
 
+    /**
+     * Match a BitPattern against the data of this object. The pattern is 
+     * matched against the beginning of the data that hasn't been matched yet. 
+     * If the pattern matches, the bits it matched are marked and are not 
+     * considered with future matches.
+     * @param pattern   The pattern to match against.
+     * @return          Whether the pattern matched.
+     * @see             BitPattern
+     */
     public boolean matchBitPattern(BitPattern pattern){
         int bits = pattern.getBitsInPattern();
         for(int i = 0; i < bits; i++){

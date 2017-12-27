@@ -3,10 +3,21 @@ package oraisa.tiivistys;
 
 import java.util.*;
 
-
+/**
+ * Contains the algorithm to calculate the Huffman encoding for a given 
+ * distribution of bytes.
+ */
 public class HuffmanCodeCalculator {
     private HuffmanCodeCalculator(){}
     
+    /**
+     * Calculate the Huffman codes for a given distribution of bytes.
+     * @param characterFrequencies A Map with a byte as the key and the frequency
+     *                             of that byte as value.
+     * @return An array of BitPatterns representing the Huffman codes of each 
+     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE.
+     * @see BitPattern
+     */
     public static BitPattern[] calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
         int characters = 256;
         BitPattern[] huffmanCodes = new BitPattern[characters];
