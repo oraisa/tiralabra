@@ -1,3 +1,5 @@
+package oraisa.tiivistys;
+
 
 import oraisa.tiivistys.BitMatcher;
 import oraisa.tiivistys.BitPattern;

@@ -1,5 +1,5 @@
+package oraisa.tiivistys;
 
-import oraisa.tiivistys.BitPattern;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

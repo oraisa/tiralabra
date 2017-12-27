@@ -1,7 +1,5 @@
+package oraisa.tiivistys;
 
-import oraisa.tiivistys.HuffmanCodeCalculator;
-import oraisa.tiivistys.BitPattern;
-import oraisa.tiivistys.BitMatcher;
 import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;
