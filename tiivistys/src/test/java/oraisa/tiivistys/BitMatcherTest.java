@@ -100,5 +100,23 @@ public class BitMatcherTest {
         assertEquals(true, fourZerosFourOnesMatcher.matchBitPattern(new BitPattern(0, 4, 0)));
         assertEquals(true, fourZerosFourOnesMatcher.matchBitPattern(new BitPattern((byte)0x0F, 4, 0)));
     }
+    
+    @Test
+    public void bitsLeftIsCorrectInAtStart(){
+        assertEquals(16, someZerosMatcher.bitsLeft());
+    }
+    
+    @Test
+    public void bitsLeftIsCorrectAfterMatch(){
+        someZerosMatcher.matchBitPattern(new BitPattern(0, 4, 0));
+        assertEquals(12, someZerosMatcher.bitsLeft());
+    }
+    
+    @Test
+    public void canMatchPatternWithMoreBitsThanMatcher(){
+        someZerosMatcher.matchBitPattern(new BitPattern(0, 8, 0));
+        someZerosMatcher.matchBitPattern(new BitPattern(0, 4, 0));
+        someZerosMatcher.matchBitPattern(new BitPattern(0, 5, 0));
+    }
 
 }

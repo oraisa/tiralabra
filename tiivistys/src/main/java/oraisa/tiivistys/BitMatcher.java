@@ -17,6 +17,14 @@ public class BitMatcher {
     public BitMatcher(byte[] bytes){
         this.bytes = bytes;
     }
+    
+    /**
+     * Return how many bits of data are left.
+     * @return The amount of bits left in the data.
+     */
+    public long bitsLeft(){
+        return bytes.length * 8 - bitPosition;
+    }
 
     /**
      * Match a BitPattern against the data of this object. The pattern is 
@@ -29,6 +37,10 @@ public class BitMatcher {
      */
     public boolean matchBitPattern(BitPattern pattern){
         int bits = pattern.getBitsInPattern();
+        if(bits > bitsLeft()){
+            return false;
+        }
+        
         for(int i = 0; i < bits; i++){
             int bitPositionInPattern = 8 - (bits - i);
             long bitPositionInData = i + bitPosition;
@@ -43,9 +55,9 @@ public class BitMatcher {
 
     private byte getBitAtBitPosition(long position){
         if(position >= bytes.length * 8){
-            throw new ArrayIndexOutOfBoundsException("Position " + position + " is outside the data.");
+            throw new IllegalArgumentException("Position " + position + " is outside the data.");
         } else if(position < 0){
-            throw new ArrayIndexOutOfBoundsException("Negative position");
+            throw new IllegalArgumentException("Negative position");
         }
         byte byt = bytes[(int)(position / 8)];
         return getBitAtPositionInByte(position % 8, byt);
@@ -53,9 +65,9 @@ public class BitMatcher {
 
     private byte getBitAtPositionInByte(long position, byte byt){
         if(position >= 8){
-            throw new ArrayIndexOutOfBoundsException("Position " + position + " >= 8.");
+            throw new IllegalArgumentException("Position " + position + " >= 8.");
         } else if(position < 0){
-            throw new ArrayIndexOutOfBoundsException("Negative position");
+            throw new IllegalArgumentException("Negative position");
         }
         int mask = 1 << (8 - (position + 1));
         int result = byt & mask;
