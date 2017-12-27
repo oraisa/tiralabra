@@ -10,7 +10,6 @@ public class HuffmanCodeCalculator {
         int characters = 256;
         BitPattern[] huffmanCodes = new BitPattern[characters];
         
-        //TODO: this could be done with a minimum heap
         PriorityQueue<HuffmanTreeNode> nodes = new PriorityQueue<HuffmanTreeNode>();
         for(Byte character: characterFrequencies.keySet()){
             nodes.offer(new HuffmanTreeNode(character, characterFrequencies.get(character)));
