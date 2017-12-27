@@ -5,6 +5,7 @@ import java.util.*;
 
 
 public class HuffmanCodeCalculator {
+    private HuffmanCodeCalculator(){}
     
     public static BitPattern[] calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
         int characters = 256;
