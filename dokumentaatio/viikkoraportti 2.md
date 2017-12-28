@@ -8,3 +8,7 @@ Aikaa meni noin 2 tuntia.
 Tänään tein Huffmannin koodien laskennalle testejä ja
 kirjoitin javadoc-kommentteja. Ajoin myös mutaatiotestauksen ensimmäisen kerran ja tein sen
 perusteella lisää testejä. Aikaa meni noin 3 tuntia.
+
+## 28.12
+Tänään tein luokan joka pystyy lisäämään yksittäisiä
+bittejä taulukon perään. Aikaa meni noi 1,5 tuntia.
