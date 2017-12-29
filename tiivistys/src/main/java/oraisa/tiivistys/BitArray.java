@@ -11,7 +11,7 @@ public class BitArray {
      * Get the bits added to the array.
      * @return A byte array with all the bits added to the array. The last bits
      * of the last byte may be zeros if the added bits don't add up to a whole 
-     * number of bytes This method return a newly created array each time it 
+     * number of bytes. This method return a newly created array each time it 
      * is called.
      */
     public byte[] getBytes(){
@@ -37,15 +37,7 @@ public class BitArray {
         this.bytes = bytes;
         nextBitPosition = bytes.length * 8;
     }
-    /*
-    public byte getByte(int index){
-        return bytes[index];
-    }
     
-    public void getBit(long index){
-        
-    }
-    */
     /**
      * Add bits to the end of this array.
      * @param bits A byte with the bits to add.
