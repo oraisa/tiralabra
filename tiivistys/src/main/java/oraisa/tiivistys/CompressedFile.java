@@ -13,7 +13,7 @@ public class CompressedFile {
      * @param bytes An array of bytes with the compressed data.
      * @return The object representing the compressed data.
      */
-    public static CompressedFile fromBytes(byte[] bytes){
+    public static CompressedFile fromCompressedBytes(byte[] bytes){
         int characters = 256;
         int headerLength = 3 * characters;
 
@@ -61,7 +61,7 @@ public class CompressedFile {
      * Decodes the compressed data and return the uncompressed data.
      * @return An array of bytes with the uncompressed data.
      */
-    public byte[] getPlainData(){
+    public byte[] getUnCompressedData(){
         ArrayList<Byte> plainData = new ArrayList<Byte>();
         BitMatcher matcher = new BitMatcher(data);
         while(true){

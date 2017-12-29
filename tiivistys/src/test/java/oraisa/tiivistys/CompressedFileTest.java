@@ -56,11 +56,11 @@ public class CompressedFileTest {
 
     @Test
     public void createdFromBytesWithTrivialEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(trivialBytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialBytes);
     }
     @Test
     public void createdFromBytesWithFlippedEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(flippedBytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class CompressedFileTest {
     }
 
     private void testHuffmanCodesWithTrivialEncoding(byte[] bytes){
-        CompressedFile file = CompressedFile.fromBytes(bytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(bytes);
         BitPattern[] huffmanCodes = file.getHuffmanCodes();
         for(BitPattern pattern: huffmanCodes){
             assertEquals(pattern.getReplacement(), pattern.getPattern());
@@ -84,7 +84,7 @@ public class CompressedFileTest {
 
     @Test
     public void correctHuffmanCodesForFlippedEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(flippedBytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
         BitPattern[] huffmanCodes = file.getHuffmanCodes();
         for(BitPattern pattern: huffmanCodes){
             assertEquals((byte)255 - pattern.getReplacement(), pattern.getPattern());
@@ -94,7 +94,7 @@ public class CompressedFileTest {
 
     @Test
     public void correctDataForTrivialEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(trivialBytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialBytes);
         byte[] data = file.getData();
         assertEquals(data.length, trivialBytes.length - 3 * 256);
         for(int i = 0; i < data.length; i++){
@@ -103,7 +103,7 @@ public class CompressedFileTest {
     }
     @Test
     public void correctDataForTrivialEncodingWithData(){
-        CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialEncodingWithData);
         byte[] data = file.getData();
         assertEquals(data.length, trivialEncodingWithData.length - 3 * 256);
         for(int i = 0; i < data.length; i++){
@@ -113,7 +113,7 @@ public class CompressedFileTest {
 
     @Test
     public void correctDataForFlippedEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(flippedBytes);
+        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
         byte[] data = file.getData();
         assertEquals(data.length, flippedBytes.length - 3 * 256);
         for(int i = 0; i < data.length; i++){
@@ -123,8 +123,8 @@ public class CompressedFileTest {
 
     @Test
     public void correctPlainDataWithTrivialEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(trivialEncodingWithData);
-        byte[] plainData = file.getPlainData();
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialEncodingWithData);
+        byte[] plainData = file.getUnCompressedData();
         assertEquals(plainData.length, trivialEncodingWithData.length - 3 * 256);
         for(int i = 0; i < plainData.length; i++){
             assertEquals("At index " + i, 6, plainData[i]);
@@ -133,8 +133,8 @@ public class CompressedFileTest {
 
     @Test
     public void correctPlainDataWithFlippedEncoding(){
-        CompressedFile file = CompressedFile.fromBytes(flippedBytes);
-        byte[] plainData = file.getPlainData();
+        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
+        byte[] plainData = file.getUnCompressedData();
         assertEquals(plainData.length, trivialEncodingWithData.length - 3 * 256);
         for(int i = 0; i < plainData.length; i++){
             assertEquals("At index " + i, (byte)255, plainData[i]);
