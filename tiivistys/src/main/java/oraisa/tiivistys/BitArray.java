@@ -53,8 +53,7 @@ public class BitArray {
         int bitsToNextByte = numberOfBits + bitIndexInLastByte - 8;
         if(bitsToNextByte > 0){
             addBitsToLastByte((byte)(bits >> bitsToNextByte), (byte)(numberOfBits - bitsToNextByte));
-            addBitsToLastByte((byte)(bits - ((bits >> bitsToNextByte) << bitsToNextByte)), 
-                    (byte)bitsToNextByte);
+            addBitsToLastByte((byte)bits, (byte)bitsToNextByte);
         } else {
             addBitsToLastByte(bits, numberOfBits);
         }

@@ -73,6 +73,7 @@ public class HuffmanCodeCalculatorTest {
         }
     }
     
+    @Test
     public void huffmanCodeCalculatorHasOptimalCodeLengthsWithExample(){
         BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(exampleFrequencies);
         for(int i = 1; i < exampleOptimalEncodingLengths.length; i++){
