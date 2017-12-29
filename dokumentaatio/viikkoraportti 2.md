@@ -15,7 +15,8 @@ bittejä taulukon perään. Aikaa meni noi 1,5 tuntia.
 
 ## 29.12
 Tänään korjasin joitain bugeja testeissä ja koodissa.
-Lisäksi tein viikon raportin valmiiksi.
+Lisäksi tein viikon raportin valmiiksi. Aikaa meni noin
+tunti.
 
 ## Epäselvää tai vaikeaa
 Tälläkään viikolla ei tullut mitään tähän kohtaan kuuluvaa
@@ -30,3 +31,6 @@ minimikeon toteuttamista myöhemmillä viikoilla. Koodissa
 käytetään tällä hetkellä HashMap-luokkaa, mutta voi olla,
 että ne kohdat voi tehdä tavallisilla taulukoilla, joten
 HashMappiä ei välttämättä tarvitse itse toteuttaa.
+
+## Ajankäyttö
+Aikaa meni yhteensä noin 7,5 tuntia.
