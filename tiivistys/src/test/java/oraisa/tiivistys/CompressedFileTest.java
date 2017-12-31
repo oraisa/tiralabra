@@ -15,6 +15,9 @@ public class CompressedFileTest {
     byte[] trivialBytes;
     byte[] flippedBytes;
     byte[] trivialEncodingWithData;
+    
+    byte[] oneTwoThree;
+    byte[] oneTwoThreeEtc;
 
     public CompressedFileTest() {
     }
@@ -47,6 +50,12 @@ public class CompressedFileTest {
         }
         for(int i = 3 * 256; i < trivialEncodingWithData.length; i++){
             trivialEncodingWithData[i] = 6;
+        }
+        
+        oneTwoThree = new byte[]{1, 2, 3};
+        oneTwoThreeEtc = new byte[1000];
+        for(int i = 0; i < oneTwoThreeEtc.length; i++){
+            oneTwoThreeEtc[i] = (byte)i;
         }
     }
 
@@ -139,6 +148,52 @@ public class CompressedFileTest {
         for(int i = 0; i < plainData.length; i++){
             assertEquals("At index " + i, (byte)255, plainData[i]);
         }
+    }
+    
+    @Test
+    public void compressedSmallDataMatchesWithBitPatternsOfOriginalData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThree);
+        BitMatcher matcher = new BitMatcher(file.getData());
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[1 - Byte.MIN_VALUE]));
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[2 - Byte.MIN_VALUE]));
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[3 - Byte.MIN_VALUE]));
+    }
+    
+    @Test
+    public void compressedLargeDataMatchesWithBitPatternsOfOriginalData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThreeEtc);
+        BitMatcher matcher = new BitMatcher(file.getData());
+        for(int i = 0; i < oneTwoThreeEtc.length; i++){
+            assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[oneTwoThreeEtc[i] - Byte.MIN_VALUE]));
+        }
+    }
+    
+    @Test
+    public void compressedOtherDataMatchesWithBitPatternsOfOriginalData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(flippedBytes);
+        BitMatcher matcher = new BitMatcher(file.getData());
+        for(int i = 0; i < flippedBytes.length; i++){
+            BitPattern pattern = (file.getHuffmanCodes()[flippedBytes[i] - Byte.MIN_VALUE]);
+            assertTrue("Index:" + i + ", pattern: " + pattern.toString(), matcher.matchBitPattern(pattern));
+        }
+    }
+    
+    @Test
+    public void compressingAndUnCompressingSmallDataReturnsTheSameData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThree);
+        assertArrayEquals(oneTwoThree, file.getUnCompressedData());
+    }
+    
+    @Test
+    public void compressingAndUnCompressingLargeDataReturnsTheSameData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThreeEtc);
+        assertArrayEquals(oneTwoThreeEtc, file.getUnCompressedData());
+    }
+    
+    @Test
+    public void compressingAndUnCompressingOtherDataReturnsTheSameData(){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(flippedBytes);
+        assertArrayEquals(flippedBytes, file.getUnCompressedData());
     }
     
 }

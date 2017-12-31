@@ -32,6 +32,37 @@ public class CompressedFile {
         }
         return new CompressedFile(huffmanCodes, data);
     }
+    
+    /**
+     * Compress data.
+     * @param bytes An array of bytes representing the data to be compressed.
+     * @return An object representing the compressed data.
+     */
+    public static CompressedFile fromUnCompressedBytes(byte[] bytes){
+        Map<Byte, Long> characterFrequencies = countCharacters(bytes);
+        BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequencies);
+        BitArray array = new BitArray();
+        for(byte byt: bytes){
+            BitPattern patternForByte = huffmanCodes[byt - Byte.MIN_VALUE];
+            array.addBitPattern(patternForByte);
+        }
+        
+        CompressedFile newFile = new CompressedFile(huffmanCodes, array.getBytes());
+        return newFile;
+    }
+    
+    private static Map<Byte, Long> countCharacters(byte[] bytes){
+        Map<Byte, Long> characterFrequencies = new HashMap<Byte, Long>();
+        for(int i = 0; i < bytes.length; i++){
+            byte byt = bytes[i];
+            if(characterFrequencies.containsKey(byt)){
+                characterFrequencies.put(byt, characterFrequencies.get(byt) + 1);
+            } else {
+                characterFrequencies.put(byt, 1L);
+            }
+        }
+        return characterFrequencies;
+    }
 
     private BitPattern[] huffmanCodes;
     /**
@@ -67,7 +98,7 @@ public class CompressedFile {
         while(true){
             boolean matchedPattern = false;
             for(BitPattern pattern: huffmanCodes){
-                if(matcher.matchBitPattern(pattern)){
+                if(pattern != null && matcher.matchBitPattern(pattern)){
                     plainData.add(pattern.getReplacement());
                     matchedPattern = true;
                     break;
