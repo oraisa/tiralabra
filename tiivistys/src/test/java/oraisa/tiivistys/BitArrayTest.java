@@ -97,4 +97,23 @@ public class BitArrayTest {
         array.addBitPattern(new BitPattern(4 + 2, 4, 0));
         assertArrayEquals(shouldBeArray, array.getBytes());
     }
+    
+    @Test
+    public void add9BitsWorks(){
+        byte[] shouldBeArray = new byte[2];
+        shouldBeArray[0] = (byte)(128 + 32 + 4 + 2);
+        shouldBeArray[1] = -128;
+        array.addBits((short)(1 + 4 + 8 + 64 + 256), 9);
+        assertArrayEquals(shouldBeArray, array.getBytes());
+    }
+    
+    
+    @Test
+    public void add9BitsStartingWithZeroWorks(){
+        byte[] shouldBeArray = new byte[2];
+        shouldBeArray[0] = (byte)(64 + 4);
+        shouldBeArray[1] = -128;
+        array.addBits((short)(1 + 8 + 128), 9);
+        assertArrayEquals(shouldBeArray, array.getBytes());
+    }
 }

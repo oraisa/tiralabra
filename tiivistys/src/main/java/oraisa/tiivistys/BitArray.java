@@ -57,16 +57,16 @@ public class BitArray {
             throw new IllegalArgumentException("Cannot add more than 16 or less than"
                     + "zero bits to the bit array.");
         }
-        if(numberOfBits < 16){
-            addLessThan8Bits((byte)bits, numberOfBits);
+        if(numberOfBits <= 8){
+            addAtMost8Bits((byte)bits, numberOfBits);
         } else {
             //Split the short into two bytes.
-            addLessThan8Bits((byte)(bits >> 8), numberOfBits - 8);
-            addLessThan8Bits((byte)bits, 8);
+            addAtMost8Bits((byte)Utils.shortRightShift(bits, 8), numberOfBits - 8);
+            addAtMost8Bits((byte)bits, 8);
         }
     }
     
-    private void addLessThan8Bits(byte bits, int numberOfBits){
+    private void addAtMost8Bits(byte bits, int numberOfBits){
         while(bytes.length * 8 - nextBitPosition < numberOfBits){
             expandArray();
         }
@@ -75,7 +75,8 @@ public class BitArray {
         
         int bitsToNextByte = numberOfBits + bitIndexInLastByte - 8;
         if(bitsToNextByte > 0){
-            addBitsToLastByte((byte)(bits >> bitsToNextByte), (byte)(numberOfBits - bitsToNextByte));
+            addBitsToLastByte(Utils.byteRightShift(bits, bitsToNextByte), 
+                    (byte)(numberOfBits - bitsToNextByte));
             addBitsToLastByte((byte)bits, (byte)bitsToNextByte);
         } else {
             addBitsToLastByte(bits, numberOfBits);
@@ -85,7 +86,7 @@ public class BitArray {
     
     private void addBitsToLastByte(byte bits, int numberOfBits){
         int lastByteIndex = (int)(nextBitPosition / 8);
-        int bitIndexInLastByte = (int)(nextBitPosition % 8);   
+        int bitIndexInLastByte = (int)(nextBitPosition % 8);
         byte lastByte = bytes[lastByteIndex];
         byte shiftedBits = (byte)(bits << (8 - numberOfBits - bitIndexInLastByte));
         byte newLastByte = (byte)(lastByte + shiftedBits);
