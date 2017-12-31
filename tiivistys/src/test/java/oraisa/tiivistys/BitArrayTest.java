@@ -88,4 +88,13 @@ public class BitArrayTest {
         arrayWithInitialData.addBits((byte)1, (byte)8);
         assertArrayEquals(shouldBeArray, arrayWithInitialData.getBytes());
     }
+    
+    @Test
+    public void addBitPatternWorks(){
+        byte[] shouldBeArray = new byte[1];
+        shouldBeArray[0] = (2 << 4) + 4 + 2;
+        array.addBitPattern(new BitPattern(2, 4, 0));
+        array.addBitPattern(new BitPattern(4 + 2, 4, 0));
+        assertArrayEquals(shouldBeArray, array.getBytes());
+    }
 }

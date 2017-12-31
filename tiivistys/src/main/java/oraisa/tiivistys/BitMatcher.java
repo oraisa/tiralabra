@@ -42,10 +42,10 @@ public class BitMatcher {
         }
         
         for(int i = 0; i < bits; i++){
-            int bitPositionInPattern = 8 - (bits - i);
+            int bitPositionInPattern = 16 - (bits - i);
             long bitPositionInData = i + bitPosition;
             if(getBitAtBitPosition(bitPositionInData) !=
-            getBitAtPositionInByte(bitPositionInPattern, pattern.getPattern())){
+            getBitAtPositionInShort(bitPositionInPattern, pattern.getPattern())){
                 return false;
             }
         }
@@ -60,17 +60,17 @@ public class BitMatcher {
             throw new IllegalArgumentException("Negative position");
         }
         byte byt = bytes[(int)(position / 8)];
-        return getBitAtPositionInByte(position % 8, byt);
+        return getBitAtPositionInShort(position % 8 + 8, (short)byt);
     }
 
-    private byte getBitAtPositionInByte(long position, byte byt){
-        if(position >= 8){
-            throw new IllegalArgumentException("Position " + position + " >= 8.");
+    private byte getBitAtPositionInShort(long position, short shor){
+        if(position >= 16){
+            throw new IllegalArgumentException("Position " + position + " >= 16.");
         } else if(position < 0){
             throw new IllegalArgumentException("Negative position");
         }
-        int mask = 1 << (8 - (position + 1));
-        int result = byt & mask;
+        int mask = 1 << (16 - (position + 1));
+        int result = shor & mask;
         if(result == 0){
             return 0;
         } else {

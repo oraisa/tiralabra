@@ -27,7 +27,7 @@ public class BitPatternTest {
     BitPattern zeroPattern;
     @Before
     public void setUp() {
-        fullPattern = new BitPattern((byte)0xFF, 8, 0);
+        fullPattern = new BitPattern((short)0xFFFF, 16, 0);
         oneBitPattern = new BitPattern(1, 1, 4);
         twoBitPattern = new BitPattern(2, 2, 5);
         withLeadingZero = new BitPattern(1, 2, 5);
@@ -39,7 +39,7 @@ public class BitPatternTest {
     }
 
     @Test
-    public void addBitDoesntAllowAddingTo8BitPattern(){
+    public void addBitDoesntAllowAddingTo16BitPattern(){
         boolean exceptionCaught = false;
         try{
             fullPattern.addBit((byte)1);
@@ -101,7 +101,7 @@ public class BitPatternTest {
     
     @Test
     public void fullPatternHasCorrectToString(){
-        assertEquals("11111111", fullPattern.toString());
+        assertEquals("1111111111111111", fullPattern.toString());
     }
     
     @Test

@@ -5,21 +5,21 @@ package oraisa.tiivistys;
  * A pattern of one to eight bits and the replacement of that pattern.
  */
 public class BitPattern {
-    private byte pattern;
+    private short pattern;
     /**
      * Returns the bit pattern of this object.
-     * @return A byte representing the bit pattern of this object.
+     * @return A short representing the bit pattern of this object.
      */
-    public byte getPattern(){
+    public short getPattern(){
         return pattern;
     }
 
-    private byte bitsInPattern;
+    private int bitsInPattern;
     /**
      * Returns the number of bits that this object's pattern has.
      * @return The number of bits in this objects pattern.
      */
-    public byte getBitsInPattern(){
+    public int getBitsInPattern(){
         return bitsInPattern;
     }
 
@@ -36,17 +36,22 @@ public class BitPattern {
      * Class constructor
      * @param pattern       The bit pattern. Some leading zeros may not be used,
      *                      depending on the parameter bitsInPattern.
-     * @param bitsInPattern The number of bits this pattern has.
+     * @param bitsInPattern The number of bits this pattern has. Must be between 
+     *                      0 and 16
      * @param replacement   The byte this pattern replaces.
      */
-    public BitPattern(byte pattern, byte bitsInPattern, byte replacement){
+    public BitPattern(short pattern, int bitsInPattern, byte replacement){
+        if(bitsInPattern > 16 || bitsInPattern < 0){
+            throw new IllegalArgumentException("Cannot have more than 16 or less "
+                    + "than zero bits in a bit pattern.");
+        }
         this.pattern = pattern;
         this.bitsInPattern = bitsInPattern;
         this.replacement = replacement;
     }
 
     public BitPattern(int pattern, int bitsInPattern, int replacement){
-        this((byte)pattern, (byte)bitsInPattern, (byte)replacement);
+        this((short)pattern, bitsInPattern, (byte)replacement);
     }
     
     /**
@@ -59,9 +64,9 @@ public class BitPattern {
      * @throws IllegalArgumentException If the parameter is not 1 or 0.
      */
     public BitPattern addBit(byte bit){
-        if(bitsInPattern == 8){
+        if(bitsInPattern >= 16){
             throw new IllegalStateException("Cannot add a bit to a pattern that"
-                    + "already has 8 bits.");
+                    + "already has 16 bits.");
         }
         if(bit < 0 || bit > 1){
             throw new IllegalArgumentException("Argument must be 1 or 0");
@@ -79,7 +84,7 @@ public class BitPattern {
         int fixedPattern = pattern;
         //Don't consider the pattern signed.
         if(pattern < 0){
-            fixedPattern = pattern - Byte.MIN_VALUE * 2;
+            fixedPattern = pattern - Short.MIN_VALUE * 2;
         }
         String withoutLeadingZeros = Integer.toString(fixedPattern, 2);
         String leadingZeros = "";
