@@ -15,7 +15,8 @@ public class HuffmanCodeCalculator {
      * @param characterFrequencies A Map with a byte as the key and the frequency
      *                             of that byte as value.
      * @return An array of BitPatterns representing the Huffman codes of each 
-     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE.
+     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE. Bytes that 
+     * don't have a frequency in characterFrequencies have a null pattern.
      * @see BitPattern
      */
     public static BitPattern[] calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
