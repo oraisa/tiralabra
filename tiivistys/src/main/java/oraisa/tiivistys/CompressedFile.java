@@ -89,6 +89,27 @@ public class CompressedFile {
         this.data = data;
     }
     
+    public byte[] getCompressedDataWithHeader(){
+        int headerLength = huffmanCodes.length * 4 - 1;
+        byte[] dataWithHeader = new byte[data.length + headerLength];
+        for(int i = 0; i < huffmanCodes.length - 1; i++){
+            int j = i * 4;
+            byte[] patternBytes = huffmanCodes[i].toBytes();
+            dataWithHeader[j] = patternBytes[0];
+            dataWithHeader[j + 1] = patternBytes[1];
+            dataWithHeader[j + 2] = patternBytes[2];
+            dataWithHeader[j + 3] = patternBytes[3];
+        }
+        byte[] stopCodeBytes = huffmanCodes[huffmanCodes.length - 1].toBytes();
+        dataWithHeader[headerLength - 3] = stopCodeBytes[0];
+        dataWithHeader[headerLength - 2] = stopCodeBytes[1];
+        dataWithHeader[headerLength - 1] = stopCodeBytes[2];
+        
+        for(int i = 0; i < data.length; i++){
+            dataWithHeader[i + headerLength] = data[i];
+        }
+        return dataWithHeader;
+    }
 
     /**
      * Decodes the compressed data and return the uncompressed data.
