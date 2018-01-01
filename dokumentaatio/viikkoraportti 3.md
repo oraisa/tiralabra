@@ -11,3 +11,11 @@ ei toimi halutusti negatiivisilla short-, tai
 byte-muuttujilla. Tein tämänkin korjaavat metodit.
 Näiden jälkeen byte-taulukon tiivistäminen ja purkaminen
 on melkein valmis. Aikaa meni noin 4 tuntia.
+
+## 1.1
+Tänään laitoin koodin merkkaamaan tiivistetyn tiedoston
+lopun erityisellä merkillä. Lisäksi aloitin tekemään
+tiivistetyn byte-taulukon headerin kera tekevää metodia.
+Tiivistetyn tiedoston päättymisen merkkaaminen
+tarkoittaa, että monet CompressedFile-luokan testeistä
+täytyy tehdä uusiksi. Aikaa meni noin 2,5 tuntia.
