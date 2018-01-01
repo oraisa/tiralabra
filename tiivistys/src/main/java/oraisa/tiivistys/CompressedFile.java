@@ -79,7 +79,7 @@ public class CompressedFile {
      * Gets the compressed data without the header.
      * @return An array of bytes with the compressed data.
      */
-    public byte[] getData(){
+    public byte[] getCompressedData(){
         return data;
     }
 
