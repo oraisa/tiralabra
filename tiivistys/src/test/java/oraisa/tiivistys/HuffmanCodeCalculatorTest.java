@@ -28,6 +28,8 @@ public class HuffmanCodeCalculatorTest {
     @Before
     public void setUp() {
         //This exaple is from http://math.mit.edu/~goemans/18310S15/huffman-notes.pdf
+        //The encoding length for 2 is 5 instead of the 4 in the example because
+        //the example doesn't include a stop code character.
         exampleFrequencies = new HashMap<Byte, Long>();
         exampleFrequencies.put((byte)1, 40L);
         exampleFrequencies.put((byte)2, 5L);
@@ -37,7 +39,7 @@ public class HuffmanCodeCalculatorTest {
         exampleFrequencies.put((byte)6, 10L);
         exampleOptimalEncodingLengths = new byte[7];
         exampleOptimalEncodingLengths[1] = 1;
-        exampleOptimalEncodingLengths[2] = 4;
+        exampleOptimalEncodingLengths[2] = 5;
         exampleOptimalEncodingLengths[3] = 3;
         exampleOptimalEncodingLengths[4] = 4;
         exampleOptimalEncodingLengths[5] = 3;

@@ -11,22 +11,27 @@ public class HuffmanCodeCalculator {
     private HuffmanCodeCalculator(){}
     
     /**
-     * Calculate the Huffman codes for a given distribution of bytes.
+     * Calculate the Huffman codes for a given distribution of bytes. One of the
+     * codes is a BitPattern with the stop code variable set to true. This 
+     * pattern should be used to mark the of a file encoded with the returned
+     * encoding.
      * @param characterFrequencies A Map with a byte as the key and the frequency
      *                             of that byte as value.
      * @return An array of BitPatterns representing the Huffman codes of each 
-     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE. Bytes that 
+     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE. The 
+     * BitPattern for the stop code is at the end of the array. Bytes that 
      * don't have a frequency in characterFrequencies have a null pattern.
      * @see BitPattern
      */
     public static BitPattern[] calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
         int characters = 256;
-        BitPattern[] huffmanCodes = new BitPattern[characters];
+        BitPattern[] huffmanCodes = new BitPattern[characters + 1];
         
         PriorityQueue<HuffmanTreeNode> nodes = new PriorityQueue<HuffmanTreeNode>();
         for(Byte character: characterFrequencies.keySet()){
             nodes.offer(new HuffmanTreeNode(character, characterFrequencies.get(character)));
         }
+        nodes.offer(HuffmanTreeNode.createStopCode());
         
         while(nodes.size() > 1){
             HuffmanTreeNode minimumNode = nodes.poll();
@@ -45,8 +50,13 @@ public class HuffmanCodeCalculator {
             traverseHuffmanTree(huffmanCodes, node.getLeftChild(), currentPattern.addBit((byte)0));
             traverseHuffmanTree(huffmanCodes, node.getRightChild(), currentPattern.addBit((byte)1));
         } else {
-            huffmanCodes[node.getValue() - Byte.MIN_VALUE] = new BitPattern(currentPattern.getPattern(), 
-                    currentPattern.getBitsInPattern(), node.getValue());
+            if(node.isStopCode()){
+                huffmanCodes[huffmanCodes.length - 1] = BitPattern.createStopCode(
+                        currentPattern.getPattern(), currentPattern.getBitsInPattern());
+            } else {
+                huffmanCodes[node.getValue() - Byte.MIN_VALUE] = new BitPattern(currentPattern.getPattern(), 
+                        currentPattern.getBitsInPattern(), node.getValue());
+            }
         }
     }
 }
@@ -56,6 +66,7 @@ class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
     private HuffmanTreeNode rightChild = null;
     private byte value;
     private long frequency;
+    private boolean isStopCode = false;
     
     public HuffmanTreeNode getLeftChild(){
         return leftChild;
@@ -69,6 +80,9 @@ class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
     public long getFrequency(){
         return frequency;
     }
+    public boolean isStopCode(){
+        return isStopCode;
+    }
     
     HuffmanTreeNode(HuffmanTreeNode leftChild, HuffmanTreeNode rightChild){
         this.leftChild = leftChild;
@@ -78,6 +92,11 @@ class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
     HuffmanTreeNode(byte value, long frequency){
         this.value = value;
         this.frequency = frequency;
+    }
+    public static HuffmanTreeNode createStopCode(){
+        HuffmanTreeNode node = new HuffmanTreeNode((byte)0, 1);
+        node.isStopCode = true;
+        return node;
     }
 
     @Override

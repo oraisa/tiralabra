@@ -46,6 +46,7 @@ public class CompressedFile {
             BitPattern patternForByte = huffmanCodes[byt - Byte.MIN_VALUE];
             array.addBitPattern(patternForByte);
         }
+        array.addBitPattern(huffmanCodes[huffmanCodes.length - 1]);
         
         CompressedFile newFile = new CompressedFile(huffmanCodes, array.getBytes());
         return newFile;
@@ -87,6 +88,7 @@ public class CompressedFile {
         this.huffmanCodes = huffmanCodes;
         this.data = data;
     }
+    
 
     /**
      * Decodes the compressed data and return the uncompressed data.
@@ -95,24 +97,32 @@ public class CompressedFile {
     public byte[] getUnCompressedData(){
         ArrayList<Byte> plainData = new ArrayList<Byte>();
         BitMatcher matcher = new BitMatcher(data);
-        while(true){
-            boolean matchedPattern = false;
-            for(BitPattern pattern: huffmanCodes){
-                if(pattern != null && matcher.matchBitPattern(pattern)){
-                    plainData.add(pattern.getReplacement());
-                    matchedPattern = true;
-                    break;
-                }
-            }
-            if(!matchedPattern){
-                break;
-            }
-        }
+        iterateData(plainData, matcher);
+        
         byte[] plainDataArray = new byte[plainData.size()];
         for(int i = 0; i < plainDataArray.length; i++){
             plainDataArray[i] = plainData.get(i);
         }
         return plainDataArray;
     }
-
+    
+    private void iterateData(ArrayList<Byte> plainData, BitMatcher matcher){
+        while(true){
+            boolean matchedPattern = false;
+            for(BitPattern pattern: huffmanCodes){
+                if(pattern != null && matcher.matchBitPattern(pattern)){
+                    if(pattern.isStopCode()){
+                        return;
+                    } else {
+                        plainData.add(pattern.getReplacement());
+                        matchedPattern = true;
+                        break;
+                    }
+                }
+            }
+            if(!matchedPattern){
+                return;
+            }
+        }
+    }
 }

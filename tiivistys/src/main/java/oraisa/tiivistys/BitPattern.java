@@ -31,6 +31,15 @@ public class BitPattern {
     public byte getReplacement(){
         return replacement;
     }
+    
+    private boolean isStopCode;
+    /**
+     * Does this pattern represent a stop code.
+     * @return A boolean indicating if this pattern represents a stop code.
+     */
+    public boolean isStopCode(){
+        return isStopCode;
+    }
 
     /**
      * Class constructor
@@ -52,6 +61,20 @@ public class BitPattern {
 
     public BitPattern(int pattern, int bitsInPattern, int replacement){
         this((short)pattern, bitsInPattern, (byte)replacement);
+    }
+    
+    /**
+     * Create a BitPattern that represents the stop code of an encoding.
+     * @param pattern       The bit pattern. Some leading zeros may not be used,
+     *                      depending on the parameter bitsInPattern.
+     * @param bitsInPattern The number of bits this pattern has. Must be between 
+     *                      0 and 16
+     * @return The created stop code BitPattern.
+     */
+    public static BitPattern createStopCode(short pattern, int bitsInPattern){
+        BitPattern stopCode = new BitPattern(pattern, bitsInPattern, 0);
+        stopCode.isStopCode = true;
+        return stopCode;
     }
     
     /**
