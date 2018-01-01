@@ -78,6 +78,54 @@ public class BitPattern {
     }
     
     /**
+     * Create a BitPattern from the bytes returned by toBytes.
+     * @param bytes An array of at least 3 or 4 bytes. Bytes past the first four 
+     * are ignored. If the array has 3 bytes, a stop code is created. If the 
+     * array has 4 or more bytes, the first byte is used as the replacement 
+     * and the BitPattern will not be a stop code.
+     * @return The created BitPattern.
+     */
+    public static BitPattern fromBytes(byte[] bytes){
+        if(bytes.length == 3){
+            short pattern = (short)((bytes[0] << 8) + bytes[1]);
+            int bitsInPattern = bytes[2];
+            return createStopCode(pattern, bitsInPattern);
+        } else if(bytes.length >= 4){
+            byte replacement = bytes[0];
+            short pattern = (short)((bytes[1] << 8) + bytes[2]);
+            int bitsInPattern = bytes[3];
+            return new BitPattern(pattern, bitsInPattern, replacement);
+        } else {
+            throw new IllegalArgumentException("The given array has less than three bytes.");
+        }
+    }
+    
+    /**
+     * Convert this object to bytes that can be used in the header of a compressed
+     * file. If this pattern is a stop code, 3 bytes are given. The first two are
+     * the pattern of this object and the last is the number of bits in the pattern.
+     * If this pattern is not a stop code, the first byte will be the replacement
+     * byte for this pattern and the other three are as above.
+     * @return The 3 or 4 bytes representing this pattern.
+     */
+    public byte[] toBytes(){
+        if(isStopCode){
+            byte[] bytes = new byte[3];
+            bytes[0] = (byte)Utils.shortRightShift(pattern, 8);
+            bytes[1] = (byte)pattern;
+            bytes[2] = (byte)bitsInPattern;
+            return bytes;
+        } else {
+            byte[] bytes = new byte[4];
+            bytes[0] = replacement;
+            bytes[1] = (byte)Utils.shortRightShift(pattern, 8);
+            bytes[2] = (byte)pattern;
+            bytes[3] = (byte)bitsInPattern;
+            return bytes;
+        }
+    }
+    
+    /**
      * Create a new BitPattern with the pattern of this object with a bit added
      * to the end. The new pattern will have the same replacement as this 
      * object.

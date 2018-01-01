@@ -25,6 +25,7 @@ public class BitPatternTest {
     BitPattern twoBitPattern;
     BitPattern withLeadingZero;
     BitPattern zeroPattern;
+    BitPattern stopCode;
     @Before
     public void setUp() {
         fullPattern = new BitPattern((short)0xFFFF, 16, 0);
@@ -32,6 +33,7 @@ public class BitPatternTest {
         twoBitPattern = new BitPattern(2, 2, 5);
         withLeadingZero = new BitPattern(1, 2, 5);
         zeroPattern = new BitPattern(0, 1, 5);
+        stopCode = BitPattern.createStopCode((short)5, 5);
     }
     
     @After
@@ -112,5 +114,28 @@ public class BitPatternTest {
     @Test
     public void zeroPatternHasCorrectToString(){
         assertEquals("0", zeroPattern.toString());
+    }
+    
+    @Test
+    public void convertingOneBitPatternToBytesAndBackGivesTheSamePattern(){
+        BitPattern convertedPattern = BitPattern.fromBytes(oneBitPattern.toBytes());
+        assertEquals("Replacement: ", oneBitPattern.getReplacement(), convertedPattern.getReplacement());
+        assertEquals("Pattern: ", oneBitPattern.getPattern(), convertedPattern.getPattern());
+        assertEquals("Bits in pattern: ", oneBitPattern.getBitsInPattern(), convertedPattern.getBitsInPattern());
+    }
+    
+    @Test
+    public void convertingTwoBitPatternToBytesAndBackGivesTheSamePattern(){
+        BitPattern convertedPattern = BitPattern.fromBytes(twoBitPattern.toBytes());
+        assertEquals("Replacement: ", twoBitPattern.getReplacement(), convertedPattern.getReplacement());
+        assertEquals("Pattern: ", twoBitPattern.getPattern(), convertedPattern.getPattern());
+        assertEquals("Bits in pattern: ", twoBitPattern.getBitsInPattern(), convertedPattern.getBitsInPattern());
+    }
+    
+    @Test
+    public void convertingStopCodeToBytesAndBackGivesTheSamePattern(){
+        BitPattern convertedPattern = BitPattern.fromBytes(stopCode.toBytes());
+        assertEquals("Pattern: ", stopCode.getPattern(), convertedPattern.getPattern());
+        assertEquals("Bits in pattern: ", stopCode.getBitsInPattern(), convertedPattern.getBitsInPattern());
     }
 }
