@@ -123,5 +123,10 @@ public class BitMatcherTest {
         someZerosMatcher.matchBitPattern(new BitPattern(0, 4, 0));
         someZerosMatcher.matchBitPattern(new BitPattern(0, 5, 0));
     }
+    
+    @Test
+    public void patternWithZeroBitsDoesntMatch(){
+        assertFalse(someZerosMatcher.matchBitPattern(new BitPattern(0, 0, 0)));
+    }
 
 }

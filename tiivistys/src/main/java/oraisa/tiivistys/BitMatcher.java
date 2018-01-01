@@ -37,6 +37,9 @@ public class BitMatcher {
      */
     public boolean matchBitPattern(BitPattern pattern){
         int bits = pattern.getBitsInPattern();
+        if(bits == 0){
+            return false;
+        }
         if(bits > bitsLeft()){
             return false;
         }
