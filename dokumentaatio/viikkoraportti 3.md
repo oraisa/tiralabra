@@ -19,3 +19,12 @@ tiivistetyn byte-taulukon headerin kera tekevää metodia.
 Tiivistetyn tiedoston päättymisen merkkaaminen
 tarkoittaa, että monet CompressedFile-luokan testeistä
 täytyy tehdä uusiksi. Aikaa meni noin 2,5 tuntia.
+
+## 2.1
+Tänään muutin niitä CompressedFile-luokan testejä,
+joita täytyi muuttaa tiivistetyn datan päättymisen
+merkkauksen vuoksi. Tein sinne myös lisää testejä
+ja sain tiivistetyn byte-taulukon headerin kanssa
+luomisen toimimaan. Nyt luokka pystyy tiivistämään
+taulokon taulukoksi ja purkamaan tiivistetyn taulukon
+alkuperäiseksi. Aikaa meni noin 2,5 tuntia. 
