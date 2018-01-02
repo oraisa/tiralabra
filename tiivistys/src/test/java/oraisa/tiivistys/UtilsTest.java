@@ -32,6 +32,11 @@ public class UtilsTest {
     public void byteRightShiftWithPositiveNumber(){
         assertEquals((byte)8, Utils.byteRightShift((byte)64, 3));
     }
+    
+    @Test
+    public void byteRightShiftWith0(){
+        assertEquals((byte)0, Utils.byteRightShift((byte)0, 3));
+    }
 
     @Test
     public void byteRightShiftWithNegativeNumber(){
@@ -42,6 +47,11 @@ public class UtilsTest {
     public void shortRightShiftWithPositiveNumber(){
         assertEquals((short)(256 + 2), Utils.shortRightShift((short)(1024 + 8), 2));
     }
+    
+    @Test
+    public void shortRightShiftWith0(){
+        assertEquals((short)0, Utils.shortRightShift((short)0, 3));
+    }
 
     @Test
     public void shortRightShiftWithNegativeNumber(){
@@ -49,8 +59,13 @@ public class UtilsTest {
     }
     
     @Test
+    public void bitwiseByteToIntWith0(){
+        assertEquals(0, Utils.bitwiseByteToInt((byte)0));
+    }
+    
+    @Test
     public void bitwiseByteToIntWithPositiveByte(){
-        assertEquals((byte)37, Utils.bitwiseByteToInt((byte)37));
+        assertEquals(37, Utils.bitwiseByteToInt((byte)37));
     }
     
     @Test
