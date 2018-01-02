@@ -2,6 +2,7 @@
 package oraisa.tiivistys;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * Represents compressed data. Can be used to uncompress the data.
@@ -16,28 +17,21 @@ public class CompressedFile {
     public static CompressedFile fromCompressedBytes(byte[] bytes){
         int characters = 256;
         int headerLength = 4 * characters + 3;
+        ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
 
         BitPattern[] huffmanCodes = new BitPattern[characters + 1];
         for(int i = 0; i < characters; i++){
-            int j = i * 4;
             byte[] fourBytes = new byte[4];
-            fourBytes[0] = bytes[j];
-            fourBytes[1] = bytes[j + 1];
-            fourBytes[2] = bytes[j + 2];
-            fourBytes[3] = bytes[j + 3];
+            stream.read(fourBytes, 0, fourBytes.length);
             BitPattern bitPattern = BitPattern.fromBytes(fourBytes);
             huffmanCodes[i] = bitPattern;
         }
         byte[] threeBytes = new byte[3];
-        threeBytes[0] = bytes[headerLength - 3];
-        threeBytes[1] = bytes[headerLength - 2];
-        threeBytes[2] = bytes[headerLength - 1];
+        stream.read(threeBytes, 0, threeBytes.length);
         huffmanCodes[huffmanCodes.length - 1] = BitPattern.fromBytes(threeBytes);
         
         byte[] data = new byte[bytes.length - headerLength];
-        for(int i = headerLength; i < bytes.length; i++){
-            data[i - headerLength] = bytes[i];
-        }
+        stream.read(data, 0, data.length);
         return new CompressedFile(huffmanCodes, data);
     }
     
@@ -98,28 +92,24 @@ public class CompressedFile {
     }
     
     public byte[] getCompressedDataWithHeader(){
-        int headerLength = huffmanCodes.length * 4 - 1;
-        byte[] dataWithHeader = new byte[data.length + headerLength];
-        for(int i = 0; i < huffmanCodes.length - 1; i++){
-            int j = i * 4;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        for(int i = 0; i < huffmanCodes.length; i++){
             if(huffmanCodes[i] != null){
                 byte[] patternBytes = huffmanCodes[i].toBytes();
-                dataWithHeader[j] = patternBytes[0];
-                dataWithHeader[j + 1] = patternBytes[1];
-                dataWithHeader[j + 2] = patternBytes[2];
-                dataWithHeader[j + 3] = patternBytes[3];
+                stream.write(patternBytes, 0, patternBytes.length);
+            } else {
+                //Write four zeros to get the correct header size
+                stream.write(0);
+                stream.write(0);
+                stream.write(0);
+                stream.write(0);
             }
         }
-        byte[] stopCodeBytes = huffmanCodes[huffmanCodes.length - 1].toBytes();
-        assert(stopCodeBytes.length == 3);
-        dataWithHeader[headerLength - 3] = stopCodeBytes[0];
-        dataWithHeader[headerLength - 2] = stopCodeBytes[1];
-        dataWithHeader[headerLength - 1] = stopCodeBytes[2];
         
         for(int i = 0; i < data.length; i++){
-            dataWithHeader[i + headerLength] = data[i];
+            stream.write(data[i]);
         }
-        return dataWithHeader;
+        return stream.toByteArray();
     }
 
     /**
