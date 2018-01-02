@@ -15,17 +15,25 @@ public class CompressedFile {
      */
     public static CompressedFile fromCompressedBytes(byte[] bytes){
         int characters = 256;
-        int headerLength = 3 * characters;
+        int headerLength = 4 * characters + 3;
 
-        BitPattern[] huffmanCodes = new BitPattern[characters];
+        BitPattern[] huffmanCodes = new BitPattern[characters + 1];
         for(int i = 0; i < characters; i++){
-            int j = i * 3;
-            byte character = bytes[j];
-            byte bitsInPattern = bytes[j + 1];
-            byte pattern = bytes[j + 2];
-            BitPattern bitPattern = new BitPattern(pattern, bitsInPattern, character);
+            int j = i * 4;
+            byte[] fourBytes = new byte[4];
+            fourBytes[0] = bytes[j];
+            fourBytes[1] = bytes[j + 1];
+            fourBytes[2] = bytes[j + 2];
+            fourBytes[3] = bytes[j + 3];
+            BitPattern bitPattern = BitPattern.fromBytes(fourBytes);
             huffmanCodes[i] = bitPattern;
         }
+        byte[] threeBytes = new byte[3];
+        threeBytes[0] = bytes[headerLength - 3];
+        threeBytes[1] = bytes[headerLength - 2];
+        threeBytes[2] = bytes[headerLength - 1];
+        huffmanCodes[huffmanCodes.length - 1] = BitPattern.fromBytes(threeBytes);
+        
         byte[] data = new byte[bytes.length - headerLength];
         for(int i = headerLength; i < bytes.length; i++){
             data[i - headerLength] = bytes[i];
@@ -94,13 +102,16 @@ public class CompressedFile {
         byte[] dataWithHeader = new byte[data.length + headerLength];
         for(int i = 0; i < huffmanCodes.length - 1; i++){
             int j = i * 4;
-            byte[] patternBytes = huffmanCodes[i].toBytes();
-            dataWithHeader[j] = patternBytes[0];
-            dataWithHeader[j + 1] = patternBytes[1];
-            dataWithHeader[j + 2] = patternBytes[2];
-            dataWithHeader[j + 3] = patternBytes[3];
+            if(huffmanCodes[i] != null){
+                byte[] patternBytes = huffmanCodes[i].toBytes();
+                dataWithHeader[j] = patternBytes[0];
+                dataWithHeader[j + 1] = patternBytes[1];
+                dataWithHeader[j + 2] = patternBytes[2];
+                dataWithHeader[j + 3] = patternBytes[3];
+            }
         }
         byte[] stopCodeBytes = huffmanCodes[huffmanCodes.length - 1].toBytes();
+        assert(stopCodeBytes.length == 3);
         dataWithHeader[headerLength - 3] = stopCodeBytes[0];
         dataWithHeader[headerLength - 2] = stopCodeBytes[1];
         dataWithHeader[headerLength - 1] = stopCodeBytes[2];
