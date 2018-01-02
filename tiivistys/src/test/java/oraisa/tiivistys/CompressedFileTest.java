@@ -212,6 +212,65 @@ public class CompressedFileTest {
     }
     
     @Test
+    public void fileCreatedFromCompressedDataReturnsSameCompressedDataWithTrivialBytes(){
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialBytes);
+        assertArrayEquals(trivialBytes, file.getCompressedDataWithHeader());
+    }
+    
+    @Test
+    public void fileCreatedFromCompressedDataReturnsSameCompressedDataWithTrivialBytesWithData(){
+        CompressedFile file = CompressedFile.fromCompressedBytes(trivialEncodingWithData);
+        assertArrayEquals(trivialEncodingWithData, file.getCompressedDataWithHeader());
+    }
+    
+    private void testCompressedDataWithHeaderPreservesCompressedData(byte[] data){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(data);
+        byte[] compressedData = file.getCompressedData();
+        byte[] compressedDataWithHeader = file.getCompressedDataWithHeader();
+        byte[] compressedDataWithNoHeader = new byte[compressedDataWithHeader.length - 4 * 256 - 3];
+        System.arraycopy(compressedDataWithHeader, 4 * 256 + 3, compressedDataWithNoHeader, 0, 
+                compressedDataWithNoHeader.length);
+        assertArrayEquals(compressedData, compressedDataWithNoHeader);
+    }
+    
+    private void testCompressedDataWithHeaderHasRightLength(byte[] data){
+        CompressedFile file = CompressedFile.fromUnCompressedBytes(data);
+        byte[] compressedData = file.getCompressedData();
+        byte[] compressedDataWithHeader = file.getCompressedDataWithHeader();
+        assertEquals(compressedData.length + 256 * 4 + 3, compressedDataWithHeader.length);
+    }
+    
+    @Test
+    public void smallDataCompressedToBytesHasRightLength(){
+        testCompressedDataWithHeaderHasRightLength(oneTwoThree);
+    }
+    
+    @Test
+    public void getCompressedDataWithHeaderPreservesCompressedDataWithSmallData(){
+        testCompressedDataWithHeaderPreservesCompressedData(oneTwoThree);
+    }
+    
+    @Test
+    public void largeDataCompressedToBytesHasRightLength(){
+        testCompressedDataWithHeaderHasRightLength(oneTwoThreeEtc);
+    }
+    
+    @Test
+    public void getCompressedDataWithHeaderPreservesCompressedDataWithLargeData(){
+        testCompressedDataWithHeaderPreservesCompressedData(oneTwoThreeEtc);
+    }
+    
+    @Test
+    public void otherDataCompressedToBytesHasRightLength(){
+        testCompressedDataWithHeaderHasRightLength(flippedBytes);
+    }
+    
+    @Test
+    public void getCompressedDataWithHeaderPreservesCompressedDataWithOtherData(){
+        testCompressedDataWithHeaderPreservesCompressedData(flippedBytes);
+    }
+    
+    @Test
     public void compressingAndUnCompressingSmallDataReturnsTheSameData(){
         CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThree);
         assertArrayEquals(oneTwoThree, file.getUnCompressedData());
