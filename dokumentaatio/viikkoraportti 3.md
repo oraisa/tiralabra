@@ -27,4 +27,24 @@ merkkauksen vuoksi. Tein sinne myös lisää testejä
 ja sain tiivistetyn byte-taulukon headerin kanssa
 luomisen toimimaan. Nyt luokka pystyy tiivistämään
 taulokon taulukoksi ja purkamaan tiivistetyn taulukon
-alkuperäiseksi. Aikaa meni noin 2,5 tuntia. 
+alkuperäiseksi. Lisäsin myös Main-luokkaan koodia, joka
+joko tiivistää komentoriviltä annetun tiedoston tai
+purkaa sen tiedoston päätteen mukaan. Aikaa meni noin 3,5
+tuntia.
+
+## Epäselvää tai vaikeaa
+Ovatko ByteArrayOutputStream ja ByteArrayInputStream
+sellaisia tietorakenteita, jotka tällä kurssilla pitäisi
+toteuttaa itse?
+
+## Seuraavaksi
+Seuraavaksi alan toteuttaa omaa minimikekoa ja muutan
+käytetyn HashMapin taulukoksi. Niiden jälkeen teen
+käyttöliittymästä järkevämmän ja viimeistään silloin
+erotan käyttöliittymän ja kaiken muun omiksi paketeikseen.
+Myös Huffmannin koodeja esittävät BitPattern-taulukot
+muutetaan jossain vaiheessa omaksi luokakseen koodin
+selkeyden vuoksi.
+
+## Ajankäyttö
+Aikaa meni yhteensä noin 10 tuntia.
