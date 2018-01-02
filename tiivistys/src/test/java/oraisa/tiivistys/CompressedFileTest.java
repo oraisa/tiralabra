@@ -106,18 +106,7 @@ public class CompressedFileTest {
             assertEquals(16, pattern.getBitsInPattern());
         }
     }
-
-//    @Test
-//    public void correctHuffmanCodesForFlippedEncoding(){
-//        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
-//        BitPattern[] huffmanCodes = file.getHuffmanCodes();
-//        for(int i = 0; i < huffmanCodes.length - 1; i++){
-//            BitPattern pattern = huffmanCodes[i];
-//            assertEquals((byte)255 - pattern.getReplacement(), (byte)pattern.getPattern());
-//            assertEquals(8, pattern.getBitsInPattern());
-//        }
-//    }
-//    
+    
     @Test
     public void correctStopCodeWithTrivialEncoding(){
         CompressedFile file = CompressedFile.fromCompressedBytes(trivialBytes);
@@ -152,16 +141,6 @@ public class CompressedFileTest {
         }
     }
 
-//    @Test
-//    public void correctDataForFlippedEncoding(){
-//        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
-//        byte[] data = file.getCompressedData();
-//        assertEquals(data.length, flippedBytes.length - 4 * 256 - 3);
-//        for(int i = 0; i < data.length; i++){
-//            assertEquals("At index " + i, 0, data[i]);
-//        }
-//    }
-
     @Test
     public void correctPlainDataWithTrivialEncoding(){
         CompressedFile file = CompressedFile.fromCompressedBytes(trivialEncodingWithData);
@@ -171,17 +150,6 @@ public class CompressedFileTest {
             assertEquals("At index " + i, 6, plainData[i]);
         }
     }
-
-//    @Test
-//    public void correctPlainDataWithFlippedEncoding(){
-//        CompressedFile file = CompressedFile.fromCompressedBytes(flippedBytes);
-//        byte[] plainData = file.getUnCompressedData();
-//        assertEquals(plainData.length, trivialEncodingWithData.length - 4 * 256 - 3);
-//        for(int i = 0; i < plainData.length; i++){
-//            assertEquals("At index " + i, (byte)255, plainData[i]);
-//        }
-//    }
-    
     
     @Test
     public void compressedSmallDataMatchesWithBitPatternsOfOriginalData(){
