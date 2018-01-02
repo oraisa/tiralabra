@@ -40,4 +40,19 @@ public class Utils {
         }
         return (short)(fixedI >>> amount);
     }
+    
+    /**
+     * Converts a byte to an int while keeping the leftmost 24 bits of the int
+     * as zeros. With a regular cast the 24 leftmost bits of the int will be 
+     * ones if the byte is negative.
+     * @param byt The byte to convert.
+     * @return The resulting int.
+     */
+    public static int bitwiseByteToInt(byte byt){
+        if(byt < 0){
+            return byt - Byte.MIN_VALUE * 2;
+        } else {
+            return byt;
+        }
+    }
 }
