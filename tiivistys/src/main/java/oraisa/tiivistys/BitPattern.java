@@ -87,12 +87,12 @@ public class BitPattern {
      */
     public static BitPattern fromBytes(byte[] bytes){
         if(bytes.length == 3){
-            short pattern = (short)((bytes[0] << 8) + bytes[1]);
+            short pattern = (short)((bytes[0] << 8) + Utils.bitwiseByteToInt(bytes[1]));
             int bitsInPattern = bytes[2];
             return createStopCode(pattern, bitsInPattern);
         } else if(bytes.length >= 4){
             byte replacement = bytes[0];
-            short pattern = (short)((bytes[1] << 8) + bytes[2]);
+            short pattern = (short)((bytes[1] << 8) + Utils.bitwiseByteToInt(bytes[2]));
             int bitsInPattern = bytes[3];
             return new BitPattern(pattern, bitsInPattern, replacement);
         } else {

@@ -21,6 +21,7 @@ public class BitPatternTest {
     }
     
     BitPattern fullPattern;
+    BitPattern halfPattern;
     BitPattern oneBitPattern;
     BitPattern twoBitPattern;
     BitPattern withLeadingZero;
@@ -29,6 +30,7 @@ public class BitPatternTest {
     @Before
     public void setUp() {
         fullPattern = new BitPattern((short)0xFFFF, 16, 0);
+        halfPattern = new BitPattern((short)0x00FF, 8, 0);
         oneBitPattern = new BitPattern(1, 1, 4);
         twoBitPattern = new BitPattern(2, 2, 5);
         withLeadingZero = new BitPattern(1, 2, 5);
@@ -137,5 +139,13 @@ public class BitPatternTest {
         BitPattern convertedPattern = BitPattern.fromBytes(stopCode.toBytes());
         assertEquals("Pattern: ", stopCode.getPattern(), convertedPattern.getPattern());
         assertEquals("Bits in pattern: ", stopCode.getBitsInPattern(), convertedPattern.getBitsInPattern());
+    }
+    
+    @Test
+    public void convertingHalfBitPatternToBytesAndBackGivesTheSamePattern(){
+        BitPattern convertedPattern = BitPattern.fromBytes(halfPattern.toBytes());
+        assertEquals("Replacement: ", halfPattern.getReplacement(), convertedPattern.getReplacement());
+        assertEquals("Pattern: ", halfPattern.getPattern(), convertedPattern.getPattern());
+        assertEquals("Bits in pattern: ", halfPattern.getBitsInPattern(), convertedPattern.getBitsInPattern());
     }
 }
