@@ -22,8 +22,6 @@ public class HuffmanCodeCalculatorTest {
     }
     
     Map<Byte, Long> exampleFrequencies;
-    byte[] exampleOptimalEncodingLengths;
-    
     Map<Byte, Long> characterFrequenciesInFlippedBytes;
     @Before
     public void setUp() {
@@ -37,13 +35,6 @@ public class HuffmanCodeCalculatorTest {
         exampleFrequencies.put((byte)4, 7L);
         exampleFrequencies.put((byte)5, 20L);
         exampleFrequencies.put((byte)6, 10L);
-        exampleOptimalEncodingLengths = new byte[7];
-        exampleOptimalEncodingLengths[1] = 1;
-        exampleOptimalEncodingLengths[2] = 5;
-        exampleOptimalEncodingLengths[3] = 3;
-        exampleOptimalEncodingLengths[4] = 4;
-        exampleOptimalEncodingLengths[5] = 3;
-        exampleOptimalEncodingLengths[6] = 3;
         
         
         byte[] flippedBytes = new byte[1000];
@@ -69,8 +60,8 @@ public class HuffmanCodeCalculatorTest {
     public void tearDown() {
     }
     
-    private void testAllCharacters(BitPattern[] huffmanCodes){
-        for(int i = 1; i < exampleOptimalEncodingLengths.length; i++){
+    private void testAllCharacters(BitPattern[] huffmanCodes, int firstCharacter, int lastCharacter){
+        for(int i = firstCharacter; i <= lastCharacter; i++){
             assertNotNull("Encoding for " + i + ": ", huffmanCodes[i - Byte.MIN_VALUE]);
         }
     }
@@ -96,13 +87,13 @@ public class HuffmanCodeCalculatorTest {
     @Test
     public void huffmanCodeCalculatorHasEncodingForAllCharactersInExample(){
         BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(exampleFrequencies);
-        testAllCharacters(huffmanCodes);
+        testAllCharacters(huffmanCodes, 1, 6);
     }
     
     @Test
     public void huffmanCodeCalculatorHasEncodingForAllCharactersInFlippedEncoding(){
         BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequenciesInFlippedBytes);
-        testAllCharacters(huffmanCodes);
+        testAllCharacters(huffmanCodes, Byte.MIN_VALUE, Byte.MAX_VALUE);
     }
 
     @Test
@@ -115,14 +106,5 @@ public class HuffmanCodeCalculatorTest {
     public void huffmanCodeCalculatorGiveAPrefixEncodingForFlippedData(){
         BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequenciesInFlippedBytes);
         testPrefixEncoding(huffmanCodes);
-    }
-    
-    @Test
-    public void huffmanCodeCalculatorHasOptimalCodeLengthsWithExample(){
-        BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(exampleFrequencies);
-        for(int i = 1; i < exampleOptimalEncodingLengths.length; i++){
-            assertEquals("Encoding for character " + i + ": ", exampleOptimalEncodingLengths[i], 
-                    huffmanCodes[i - Byte.MIN_VALUE].getBitsInPattern());
-        }
     }
 }
