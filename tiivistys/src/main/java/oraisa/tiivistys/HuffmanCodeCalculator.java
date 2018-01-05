@@ -167,7 +167,7 @@ class HuffmanTreeNodeHeap {
     public void insert(HuffmanTreeNode node){
         heapSize += 1;
         int i = heapSize - 1;
-        while(i > 1 && heapArray[parentIndex(i)].compareTo(node) > 0){
+        while(i > 0 && heapArray[parentIndex(i)].compareTo(node) > 0){
             heapArray[i] = heapArray[parentIndex(i)];
             i = parentIndex(i);
         }
