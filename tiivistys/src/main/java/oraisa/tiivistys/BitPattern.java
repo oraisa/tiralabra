@@ -137,7 +137,7 @@ public class BitPattern {
     public BitPattern addBit(byte bit){
         if(bitsInPattern >= 16){
             throw new IllegalStateException("Cannot add a bit to a pattern that"
-                    + "already has 16 bits.");
+                    + " already has 16 bits.");
         }
         if(bit < 0 || bit > 1){
             throw new IllegalArgumentException("Argument must be 1 or 0");
