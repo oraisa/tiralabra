@@ -15,6 +15,21 @@ pysäytysmerkki. Aikaa meni noin 2 tuntia.
 ## 7.1
 Tänään tein koodikatselmoinnin. Aikaa meni noin tunti.
 
+## 8.1
+Tänään aloitin tekemään testejä isommilla tiedostoilla.
+Siinä selvisi, että Huffmannin koodi voi olla yli 16
+bittiä pitkä. Niiden tallentamiseen tarvitaan siis
+uusi lähestymistapa. Aikaa meni noin 1,5 tuntia.
+
+## 9.1
+Tänään toteutin uuden lähestymistavan koodien
+tallentamiseen. Nyt Huffmannin koodit muodostava
+puu on kokoajan käytössä. Muutoksen seurauksena
+ohjelma pystyy käsittelemään teoriassa mielivaltaisen
+mittaisia Huffmannin koodeja. Tiivistetyn tiedoston
+headeri on myös lyhyempi kuin ennen. Tämän lisäksi
+siistin koodia jonkin verran. Aikaa meni noin 5 tuntia.
+
 
 ## Epäselvää tai vaikeaa
 Täytyykö itse toteutetun keon toimia millä tahansa
@@ -25,5 +40,13 @@ toteuttaa mitään Javan valmiita rajapintoja?
 Tuleeko testausdokumentissä käsitellä yksikkötestausta?
 
 ## Seuraavaksi
+Seuraavaksi alan kirjoittamaan toteutus- ja
+testausdokumentteja ja testaamaan ohjelman suorituskykyä,
+jotka jäivät tältä viikolta väliin
+ennalta arvaamattoman ongelman takia. Koodissa voi vielä
+olla siistittävää ja jo testauksen vuoksi käyttöliittymää
+täytyy parantamaan.
 
 ## Ajankayttö
+
+Aikaa meni yhteensä 8,5 tuntia.
