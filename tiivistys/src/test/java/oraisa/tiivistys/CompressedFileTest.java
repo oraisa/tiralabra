@@ -16,6 +16,9 @@ public class CompressedFileTest {
     byte[] flippedBytes;
     byte[] oneTwoThree;
     byte[] oneTwoThreeEtc;
+    
+    byte[] exampleData;
+    Map<Byte, Long> exampleFrequencies;
 
     public CompressedFileTest() {
     }
@@ -44,10 +47,40 @@ public class CompressedFileTest {
         for(int i = 0; i < oneTwoThreeEtc.length; i++){
             oneTwoThreeEtc[i] = (byte)i;
         }
+        
+        //This exaple is from https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf
+        exampleData = new byte[]{1, 1, 1, 2, 3, 3, 3, 3, 4, 5, 7, 6, 6};
+        exampleFrequencies = new HashMap<Byte, Long>();
+        exampleFrequencies.put((byte)1, 3L);//h
+        exampleFrequencies.put((byte)2, 1L);//a
+        exampleFrequencies.put((byte)3, 4L);//p
+        exampleFrequencies.put((byte)4, 1L);//y
+        exampleFrequencies.put((byte)5, 1L);//i
+        exampleFrequencies.put((byte)7, 1L);//o
+        exampleFrequencies.put((byte)6, 2L);//space
     }
 
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void encodingForExampleDataIsOptimal(){   
+        HuffmanTreeNode root = CompressedFile.fromUnCompressedBytes(exampleData).
+                getHuffmanCodes().getRootNode();
+        assertEquals(39, traverseHuffmanTree(root, 0));
+    }
+    private long traverseHuffmanTree(HuffmanTreeNode node, long currentEncodingLength){
+        if(node.getLeftChild() != null){
+            return traverseHuffmanTree(node.getLeftChild(), currentEncodingLength + 1) + 
+                    traverseHuffmanTree(node.getRightChild(), currentEncodingLength + 1);
+        } else {
+            if(node.isStopCode()){
+                return currentEncodingLength;
+            } else {
+                return exampleFrequencies.get(node.getValue()) * currentEncodingLength;
+            }
+        }
     }
     
     @Test

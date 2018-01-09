@@ -51,6 +51,13 @@ public class CompressedFile {
     }
 
     private HuffmanEncoding huffmanCodes;
+    /**
+     * Returns the Huffman codes used to encode the compressed data.
+     * @return An object representing the used Huffman encoding.
+     */
+    public HuffmanEncoding getHuffmanCodes(){
+        return huffmanCodes;
+    }
 
     private byte[] data;
 

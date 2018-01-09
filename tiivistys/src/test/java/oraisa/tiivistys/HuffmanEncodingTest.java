@@ -71,7 +71,6 @@ public class HuffmanEncodingTest {
         exampleFrequencies.put((byte)5, 1L);//i
         exampleFrequencies.put((byte)7, 1L);//o
         exampleFrequencies.put((byte)6, 2L);//space
-        exampleFrequencies.put((byte)7, 1L);//o
         exampleEncoding = HuffmanEncoding.fromCharacterFrequencies(exampleFrequencies);
     }
     

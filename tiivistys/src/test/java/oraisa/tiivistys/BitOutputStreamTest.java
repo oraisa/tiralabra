@@ -74,4 +74,13 @@ public class BitOutputStreamTest {
         array.writeBits((16 + 4), 6);
         assertArrayEquals(shouldBeArray, array.getBytes());
     }
+    
+    @Test
+    public void writingEnoughBytesToCauseUnderlyingArrayExpansionWorks(){
+        byte[] shouldBeArray = new byte[1000];
+        for(int i = 0; i < shouldBeArray.length; i++){
+            array.writeBits(shouldBeArray[i], 8);
+        }
+        assertArrayEquals(shouldBeArray, array.getBytes());
+    }
 }

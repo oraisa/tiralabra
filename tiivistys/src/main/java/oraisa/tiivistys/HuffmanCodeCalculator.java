@@ -38,23 +38,6 @@ class HuffmanCodeCalculator {
         
         return nodes.peek();
     }
-    
-    /*
-    private static void traverseHuffmanTree(BitPattern[] huffmanCodes, HuffmanTreeNode node, BitPattern currentPattern){
-        if(node.getLeftChild() != null && node.getRightChild() != null){
-            traverseHuffmanTree(huffmanCodes, node.getLeftChild(), currentPattern.addBit((byte)0));
-            traverseHuffmanTree(huffmanCodes, node.getRightChild(), currentPattern.addBit((byte)1));
-        } else {
-            if(node.isStopCode()){
-                huffmanCodes[huffmanCodes.length - 1] = BitPattern.createStopCode(
-                        currentPattern.getPattern(), currentPattern.getBitsInPattern());
-            } else {
-                huffmanCodes[node.getValue() - Byte.MIN_VALUE] = new BitPattern(currentPattern.getPattern(), 
-                        currentPattern.getBitsInPattern(), node.getValue());
-            }
-        }
-    }
-    */
 }
 
 class HuffmanTreeNodeHeap {
