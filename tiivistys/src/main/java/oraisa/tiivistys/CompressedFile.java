@@ -19,16 +19,7 @@ public class CompressedFile {
         int headerLength = 4 * characters + 3;
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
 
-        BitPattern[] huffmanCodes = new BitPattern[characters + 1];
-        for(int i = 0; i < characters; i++){
-            byte[] fourBytes = new byte[4];
-            stream.read(fourBytes, 0, fourBytes.length);
-            BitPattern bitPattern = BitPattern.fromBytes(fourBytes);
-            huffmanCodes[i] = bitPattern;
-        }
-        byte[] threeBytes = new byte[3];
-        stream.read(threeBytes, 0, threeBytes.length);
-        huffmanCodes[huffmanCodes.length - 1] = BitPattern.fromBytes(threeBytes);
+        HuffmanEncoding huffmanCodes = HuffmanEncoding.fromDataStream(stream);
         
         byte[] data = new byte[bytes.length - headerLength];
         stream.read(data, 0, data.length);
@@ -42,15 +33,9 @@ public class CompressedFile {
      */
     public static CompressedFile fromUnCompressedBytes(byte[] bytes){
         Map<Byte, Long> characterFrequencies = countCharacters(bytes);
-        BitPattern[] huffmanCodes = HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequencies);
-        BitArray array = new BitArray();
-        for(byte byt: bytes){
-            BitPattern patternForByte = huffmanCodes[byt - Byte.MIN_VALUE];
-            array.addBitPattern(patternForByte);
-        }
-        array.addBitPattern(huffmanCodes[huffmanCodes.length - 1]);
-        
-        CompressedFile newFile = new CompressedFile(huffmanCodes, array.getBytes());
+        HuffmanEncoding huffmanCodes = HuffmanEncoding.fromCharacterFrequencies(characterFrequencies);
+        byte[] encodedData = huffmanCodes.encodeUnCompressedData(bytes);
+        CompressedFile newFile = new CompressedFile(huffmanCodes, encodedData);
         return newFile;
     }
     
@@ -67,44 +52,36 @@ public class CompressedFile {
         return characterFrequencies;
     }
 
-    private BitPattern[] huffmanCodes;
+    private HuffmanEncoding huffmanCodes;
     /**
      * Returns the Huffman codes used to encode the compressed data.
-     * @return An array of BitPatterns where each pattern has the encoding of
-     * a single byte.
+     * @return An object representing the used Huffman encoding.
      */
-    public BitPattern[] getHuffmanCodes(){
+    public HuffmanEncoding getHuffmanCodes(){
         return huffmanCodes;
     }
 
     private byte[] data;
     /**
-     * Gets the compressed data without the header.
+     * Gets the compressed data without a header.
      * @return An array of bytes with the compressed data.
      */
     public byte[] getCompressedData(){
         return data;
     }
 
-    private CompressedFile(BitPattern[] huffmanCodes, byte[] data){
+    private CompressedFile(HuffmanEncoding huffmanCodes, byte[] data){
         this.huffmanCodes = huffmanCodes;
         this.data = data;
     }
     
+    /**
+     * Get the compressed data with a header that specifies the encoding.
+     * @return An array of bytes containing the header and the compressed data.
+     */
     public byte[] getCompressedDataWithHeader(){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        for(int i = 0; i < huffmanCodes.length; i++){
-            if(huffmanCodes[i] != null){
-                byte[] patternBytes = huffmanCodes[i].toBytes();
-                stream.write(patternBytes, 0, patternBytes.length);
-            } else {
-                //Write four zeros to get the correct header size
-                stream.write(0);
-                stream.write(0);
-                stream.write(0);
-                stream.write(0);
-            }
-        }
+        huffmanCodes.writeEncodingToOutputStream(stream);
         
         for(int i = 0; i < data.length; i++){
             stream.write(data[i]);
@@ -117,34 +94,6 @@ public class CompressedFile {
      * @return An array of bytes with the uncompressed data.
      */
     public byte[] getUnCompressedData(){
-        ArrayList<Byte> plainData = new ArrayList<Byte>();
-        BitMatcher matcher = new BitMatcher(data);
-        iterateData(plainData, matcher);
-        
-        byte[] plainDataArray = new byte[plainData.size()];
-        for(int i = 0; i < plainDataArray.length; i++){
-            plainDataArray[i] = plainData.get(i);
-        }
-        return plainDataArray;
-    }
-    
-    private void iterateData(ArrayList<Byte> plainData, BitMatcher matcher){
-        while(true){
-            boolean matchedPattern = false;
-            for(BitPattern pattern: huffmanCodes){
-                if(pattern != null && matcher.matchBitPattern(pattern)){
-                    if(pattern.isStopCode()){
-                        return;
-                    } else {
-                        plainData.add(pattern.getReplacement());
-                        matchedPattern = true;
-                        break;
-                    }
-                }
-            }
-            if(!matchedPattern){
-                return;
-            }
-        }
+        return huffmanCodes.decodeCompressedData(data);
     }
 }

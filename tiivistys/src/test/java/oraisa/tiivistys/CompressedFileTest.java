@@ -99,7 +99,7 @@ public class CompressedFileTest {
 
     private void testHuffmanCodesWithTrivialEncoding(byte[] bytes){
         CompressedFile file = CompressedFile.fromCompressedBytes(bytes);
-        BitPattern[] huffmanCodes = file.getHuffmanCodes();
+        BitPattern[] huffmanCodes = file.getHuffmanCodes().getCodes();
         for(int i = 0; i < huffmanCodes.length - 1; i++){
             BitPattern pattern = huffmanCodes[i];
             assertEquals(pattern.getReplacement(), (byte)pattern.getPattern());
@@ -110,7 +110,7 @@ public class CompressedFileTest {
     @Test
     public void correctStopCodeWithTrivialEncoding(){
         CompressedFile file = CompressedFile.fromCompressedBytes(trivialBytes);
-        BitPattern[] huffmanCodes = file.getHuffmanCodes();
+        BitPattern[] huffmanCodes = file.getHuffmanCodes().getCodes();
         BitPattern stopCode = huffmanCodes[huffmanCodes.length - 1];
         assertEquals("Pattern: ", (1 << 8) + 1, stopCode.getPattern());
         assertEquals("BitsInPattern: ", 16, stopCode.getBitsInPattern());
@@ -155,9 +155,9 @@ public class CompressedFileTest {
     public void compressedSmallDataMatchesWithBitPatternsOfOriginalData(){
         CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThree);
         BitMatcher matcher = new BitMatcher(file.getCompressedData());
-        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[1 - Byte.MIN_VALUE]));
-        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[2 - Byte.MIN_VALUE]));
-        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[3 - Byte.MIN_VALUE]));
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes().getCodes()[1 - Byte.MIN_VALUE]));
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes().getCodes()[2 - Byte.MIN_VALUE]));
+        assertTrue(matcher.matchBitPattern(file.getHuffmanCodes().getCodes()[3 - Byte.MIN_VALUE]));
     }
     
     @Test
@@ -165,7 +165,7 @@ public class CompressedFileTest {
         CompressedFile file = CompressedFile.fromUnCompressedBytes(oneTwoThreeEtc);
         BitMatcher matcher = new BitMatcher(file.getCompressedData());
         for(int i = 0; i < oneTwoThreeEtc.length; i++){
-            assertTrue(matcher.matchBitPattern(file.getHuffmanCodes()[oneTwoThreeEtc[i] - Byte.MIN_VALUE]));
+            assertTrue(matcher.matchBitPattern(file.getHuffmanCodes().getCodes()[oneTwoThreeEtc[i] - Byte.MIN_VALUE]));
         }
     }
     
@@ -174,7 +174,7 @@ public class CompressedFileTest {
         CompressedFile file = CompressedFile.fromUnCompressedBytes(flippedBytes);
         BitMatcher matcher = new BitMatcher(file.getCompressedData());
         for(int i = 0; i < flippedBytes.length; i++){
-            BitPattern pattern = (file.getHuffmanCodes()[flippedBytes[i] - Byte.MIN_VALUE]);
+            BitPattern pattern = (file.getHuffmanCodes().getCodes()[flippedBytes[i] - Byte.MIN_VALUE]);
             assertTrue("Index:" + i + ", pattern: " + pattern.toString(), matcher.matchBitPattern(pattern));
         }
     }
