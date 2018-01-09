@@ -1,16 +1,18 @@
 
 package oraisa.tiivistys;
 
+//TODO: make this a bit output stream
 /**
- * An array of bits.
+ * An output stream where individual bits can be written to. The bits written to
+ * the stream are stored in an underlying array.
  */
-public class BitArray {
+public class BitOutputStream {
     
     private byte[] bytes;
     /**
-     * Get the bits added to the array.
-     * @return A byte array with all the bits added to the array. The last bits
-     * of the last byte may be zeros if the added bits don't add up to a whole 
+     * Get the bits written to the stream.
+     * @return A byte array with all the bits written to the stream. The last bits
+     * of the last byte may be zeros if the written bits don't add up to a whole 
      * number of bytes. This method return a newly created array each time it 
      * is called.
      */
@@ -26,47 +28,21 @@ public class BitArray {
     /**
      * Class constructor.
      */
-    public BitArray(){
+    public BitOutputStream(){
         bytes = new byte[100];
     }
-    /**
-     * Class constructor.
-     * @param bytes An array of bytes with the initial contents of this BitArray.
-     */
-    public BitArray(byte[] bytes){
-        this.bytes = bytes;
-        nextBitPosition = bytes.length * 8;
-    }
     
     /**
-     * Add the bits of a BitPattern to the end of this bit array.
-     * @param pattern The BitPattern to add to the end of this array.
-     * @see BitPattern
+     * Write bits to this stream.
+     * @param bits A byte with the bits to write.
+     * @param numberOfBits The number of least significant bits to write from
+     * bits. Must be positive and at most 8.
      */
-    public void addBitPattern(BitPattern pattern){
-        addBits(pattern.getPattern(), pattern.getBitsInPattern());
-    }
-    
-    /**
-     * Add bits to the end of this array.
-     * @param bits A short with the bits to add.
-     * @param numberOfBits The number of least significant bits to add from bits.
-     */
-    public void addBits(short bits, int numberOfBits){
-        if(numberOfBits < 0 || numberOfBits > 16){
-            throw new IllegalArgumentException("Cannot add more than 16 or less than"
-                    + "zero bits to the bit array.");
+    public void writeBits(byte bits, int numberOfBits){
+        if(numberOfBits <= 0 || numberOfBits > 8){
+            throw new IllegalArgumentException("Cannot write more than 8 or less than"
+                    + "one bits to the bit stream.");
         }
-        if(numberOfBits <= 8){
-            addAtMost8Bits((byte)bits, numberOfBits);
-        } else {
-            //Split the short into two bytes.
-            addAtMost8Bits((byte)Utils.shortRightShift(bits, 8), numberOfBits - 8);
-            addAtMost8Bits((byte)bits, 8);
-        }
-    }
-    
-    private void addAtMost8Bits(byte bits, int numberOfBits){
         while(bytes.length * 8 - nextBitPosition < numberOfBits){
             expandArray();
         }
@@ -81,7 +57,15 @@ public class BitArray {
         } else {
             addBitsToLastByte(bits, numberOfBits);
         }
-        
+    }
+    /**
+     * Write bits to this stream.
+     * @param bits An int with the bits to write.
+     * @param numberOfBits The number of least significant bits to write from 
+     * bits. Must be positive and at most 8.
+     */
+    public void writeBits(int bits, int numberOfBits){
+        writeBits((byte)bits, numberOfBits);
     }
     
     private void addBitsToLastByte(byte bits, int numberOfBits){

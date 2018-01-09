@@ -80,4 +80,8 @@ public class BitMatcher {
             return 1;
         }
     }
+    
+    public int getNextBit(){
+        return getBitAtBitPosition(bitPosition++);
+    }
 }

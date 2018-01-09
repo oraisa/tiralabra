@@ -48,7 +48,7 @@ public class BitInputStreamTest {
 
     @Test
     public void correctBitReadFromBitInputStreamWithTwoBytes(){
-        BitInputStream stream = new BitInputStream(new byte[]{2 + 64 + 8, 4 + 2 + 32});
+        BitInputStream stream = new BitInputStream(new byte[]{2 + 64 + 8, (byte)(4 + 2 + 32 + 128)});
         assertEquals(0, stream.readBit());
         assertEquals(1, stream.readBit());
         assertEquals(0, stream.readBit());
@@ -58,7 +58,7 @@ public class BitInputStreamTest {
         assertEquals(1, stream.readBit());
         assertEquals(0, stream.readBit());
         
-        assertEquals(0, stream.readBit());
+        assertEquals(1, stream.readBit());
         assertEquals(0, stream.readBit());
         assertEquals(1, stream.readBit());
         assertEquals(0, stream.readBit());

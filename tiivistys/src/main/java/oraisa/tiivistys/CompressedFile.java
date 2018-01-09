@@ -15,13 +15,11 @@ public class CompressedFile {
      * @return The object representing the compressed data.
      */
     public static CompressedFile fromCompressedBytes(byte[] bytes){
-        int characters = 256;
-        int headerLength = 4 * characters + 3;
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
 
         HuffmanEncoding huffmanCodes = HuffmanEncoding.fromDataStream(stream);
         
-        byte[] data = new byte[bytes.length - headerLength];
+        byte[] data = new byte[stream.available()];
         stream.read(data, 0, data.length);
         return new CompressedFile(huffmanCodes, data);
     }

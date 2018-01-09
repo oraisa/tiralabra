@@ -7,28 +7,23 @@ import java.util.Map;
  * Contains the algorithm to calculate the Huffman encoding for a given 
  * distribution of bytes.
  */
-public class HuffmanCodeCalculator {
+class HuffmanCodeCalculator {
     private HuffmanCodeCalculator(){}
     
     /**
      * Calculate the Huffman codes for a given distribution of bytes. One of the
-     * codes is a BitPattern with the stop code variable set to true. This 
-     * pattern should be used to mark the of a file encoded with the returned
-     * encoding.
+     * codes is a HuffmanTreeNode with the stop code variable set to true. The
+     * pattern of that node should be used to mark the of a file encoded with 
+     * the returned encoding.
      * @param characterFrequencies A Map with a byte as the key and the frequency
      *                             of that byte as value.
-     * @return An array of BitPatterns representing the Huffman codes of each 
-     * byte. The BitPattern for byte b is at index b - Byte.MIN_VALUE. The 
-     * BitPattern for the stop code is at the end of the array. Bytes that 
-     * don't have a frequency in characterFrequencies have a null pattern.
-     * @see BitPattern
+     * @return The root HuffmanTreeNode of the Huffman encoding tree for the 
+     * given frequencies.
+     * @see HuffmanTreeNode
      */
-    public static BitPattern[] calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
-        int characters = 256;
-        BitPattern[] huffmanCodes = new BitPattern[characters + 1];
+    static HuffmanTreeNode calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
         
-        //PriorityQueue<HuffmanTreeNode> nodes = new PriorityQueue<HuffmanTreeNode>();
-        HuffmanTreeNodeHeap nodes = new HuffmanTreeNodeHeap(huffmanCodes.length);
+        HuffmanTreeNodeHeap nodes = new HuffmanTreeNodeHeap(257);
         for(Byte character: characterFrequencies.keySet()){
             nodes.insert(new HuffmanTreeNode(character, characterFrequencies.get(character)));
         }
@@ -41,11 +36,10 @@ public class HuffmanCodeCalculator {
             nodes.insert(newNode);
         }
         
-        traverseHuffmanTree(huffmanCodes, nodes.peek(), new BitPattern(0, 0, 0));
-        
-        return huffmanCodes;
+        return nodes.peek();
     }
     
+    /*
     private static void traverseHuffmanTree(BitPattern[] huffmanCodes, HuffmanTreeNode node, BitPattern currentPattern){
         if(node.getLeftChild() != null && node.getRightChild() != null){
             traverseHuffmanTree(huffmanCodes, node.getLeftChild(), currentPattern.addBit((byte)0));
@@ -60,50 +54,7 @@ public class HuffmanCodeCalculator {
             }
         }
     }
-}
-
-class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
-    private HuffmanTreeNode leftChild = null;
-    private HuffmanTreeNode rightChild = null;
-    private byte value;
-    private long frequency;
-    private boolean isStopCode = false;
-    
-    public HuffmanTreeNode getLeftChild(){
-        return leftChild;
-    }
-    public HuffmanTreeNode getRightChild(){
-        return rightChild;
-    }
-    public byte getValue(){
-        return value;
-    }
-    public long getFrequency(){
-        return frequency;
-    }
-    public boolean isStopCode(){
-        return isStopCode;
-    }
-    
-    HuffmanTreeNode(HuffmanTreeNode leftChild, HuffmanTreeNode rightChild){
-        this.leftChild = leftChild;
-        this.rightChild = rightChild;
-        this.frequency = leftChild.getFrequency() + rightChild.getFrequency();
-    }
-    HuffmanTreeNode(byte value, long frequency){
-        this.value = value;
-        this.frequency = frequency;
-    }
-    public static HuffmanTreeNode createStopCode(){
-        HuffmanTreeNode node = new HuffmanTreeNode((byte)0, 1);
-        node.isStopCode = true;
-        return node;
-    }
-
-    @Override
-    public int compareTo(HuffmanTreeNode o) {
-        return new Long(frequency).compareTo(o.getFrequency());
-    }
+    */
 }
 
 class HuffmanTreeNodeHeap {
