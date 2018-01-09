@@ -22,9 +22,26 @@ public class Main {
     
     private static void compressFile(String file){
         try{
+            StopWatch sw = new StopWatch();
+            sw.start();
             byte[] data = Files.readAllBytes(Paths.get(file));
+            sw.stop();
+            System.out.println("Time to read file: " + sw.getElapsedTime());
+            
+            sw.start();
             CompressedFile compressedFile = CompressedFile.fromUnCompressedBytes(data);
-            Files.write(Paths.get(file + fileSuffix), compressedFile.getCompressedDataWithHeader());
+            sw.stop();
+            System.err.println("Time to create CompressedFile: " + sw.getElapsedTime());
+            
+            sw.start();
+            byte[] compressedData = compressedFile.getCompressedDataWithHeader();
+            sw.stop();
+            System.err.println("Time to add header: " + sw.getElapsedTime());
+            
+            sw.start();
+            Files.write(Paths.get(file + fileSuffix), compressedData);
+            sw.stop();
+            System.err.println("Time to write file: " + sw.getElapsedTime());
         } catch(IOException e){
             System.err.println("Failed to read or write file");
         }
