@@ -51,22 +51,8 @@ public class CompressedFile {
     }
 
     private HuffmanEncoding huffmanCodes;
-    /**
-     * Returns the Huffman codes used to encode the compressed data.
-     * @return An object representing the used Huffman encoding.
-     */
-    public HuffmanEncoding getHuffmanCodes(){
-        return huffmanCodes;
-    }
 
     private byte[] data;
-    /**
-     * Gets the compressed data without a header.
-     * @return An array of bytes with the compressed data.
-     */
-    public byte[] getCompressedData(){
-        return data;
-    }
 
     private CompressedFile(HuffmanEncoding huffmanCodes, byte[] data){
         this.huffmanCodes = huffmanCodes;
