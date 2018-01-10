@@ -1,5 +1,5 @@
 
-package oraisa.tiivistys;
+package oraisa.tiivistys.logic;
 
 //TODO: make this a bit output stream
 /**

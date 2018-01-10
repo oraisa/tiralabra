@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oraisa.tiivistys;
+package oraisa.tiivistys.logic;
 
+import oraisa.tiivistys.logic.BitOutputStream;
+import oraisa.tiivistys.logic.HuffmanEncoding;
+import oraisa.tiivistys.logic.HuffmanTreeNode;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oraisa.tiivistys;
+package oraisa.tiivistys.logic;
 
+import oraisa.tiivistys.logic.BitInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

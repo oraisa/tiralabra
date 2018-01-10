@@ -1,5 +1,7 @@
-package oraisa.tiivistys;
+package oraisa.tiivistys.logic;
 
+import oraisa.tiivistys.logic.CompressedFile;
+import oraisa.tiivistys.logic.HuffmanTreeNode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

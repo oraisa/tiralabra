@@ -34,6 +34,15 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
             <version>1.1.8</version>
+            <configuration>
+                <targetClasses>
+                    <param>oraisa.tiivistys.logic.*</param>
+                </targetClasses>
+                <targetTests>
+                    <param>oraisa.tiivistys.logic.*</param>
+                </targetTests>
+            </configuration>
+
         </plugin>
     </plugins>
 </build>

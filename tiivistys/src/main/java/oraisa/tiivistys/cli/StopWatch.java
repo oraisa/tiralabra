@@ -1,5 +1,5 @@
 
-package oraisa.tiivistys;
+package oraisa.tiivistys.cli;
 
 /**
  * A stop watch for measuring time. Uses System.currentTimeMillis to measure 

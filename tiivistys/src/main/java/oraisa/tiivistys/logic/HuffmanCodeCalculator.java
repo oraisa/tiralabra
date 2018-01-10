@@ -1,5 +1,5 @@
 
-package oraisa.tiivistys;
+package oraisa.tiivistys.logic;
 
 import java.util.Map;
 

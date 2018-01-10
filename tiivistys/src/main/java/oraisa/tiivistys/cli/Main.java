@@ -1,8 +1,9 @@
 
-package oraisa.tiivistys;
+package oraisa.tiivistys.cli;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
+import oraisa.tiivistys.logic.CompressedFile;
 
 public class Main {
     private static final String fileSuffix = ".tiiv";
