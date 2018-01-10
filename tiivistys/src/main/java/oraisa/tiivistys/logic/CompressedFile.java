@@ -3,6 +3,7 @@ package oraisa.tiivistys.logic;
 
 import java.util.*;
 import java.io.*;
+import oraisa.tiivistys.measuring.*;
 
 /**
  * Represents compressed data. Can be used to uncompress the data.
@@ -38,6 +39,7 @@ public class CompressedFile {
     }
     
     private static Map<Byte, Long> countCharacters(byte[] bytes){
+        ActiveMeasurer.getMeasurer().startCountingCharacters();
         Map<Byte, Long> characterFrequencies = new HashMap<Byte, Long>();
         for(int i = 0; i < bytes.length; i++){
             byte byt = bytes[i];
@@ -47,6 +49,7 @@ public class CompressedFile {
                 characterFrequencies.put(byt, 1L);
             }
         }
+        ActiveMeasurer.getMeasurer().endCountingCharacters();
         return characterFrequencies;
     }
 

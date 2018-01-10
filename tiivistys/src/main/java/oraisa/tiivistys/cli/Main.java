@@ -1,20 +1,39 @@
 
 package oraisa.tiivistys.cli;
-import java.util.*;
 import java.io.*;
 import java.nio.file.*;
 import oraisa.tiivistys.logic.CompressedFile;
+import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 public class Main {
     private static final String fileSuffix = ".tiiv";
+    
     public static void main(String[] args){
         
-        if(args.length > 0){
-            String file = args[0];
-            if(file.endsWith(fileSuffix)){
-                unCompressFile(file);
+        String file = "";
+        boolean includeTiming = false;
+        for(String arg: args){
+            if(arg.equals("-t")){
+                includeTiming = true;
             } else {
+                file = arg;
+            }
+        }
+        if(!file.equals("")){
+            if(includeTiming){
+                ActiveMeasurer.setActiveMeasurer(new StopWatchMeasurer());
+            }
+            if(file.endsWith(fileSuffix)){
+                ActiveMeasurer.getMeasurer().startEntireProcess();
+                unCompressFile(file);
+                ActiveMeasurer.getMeasurer().endEntireProcess();
+            } else {
+                ActiveMeasurer.getMeasurer().startEntireProcess();
                 compressFile(file);
+                ActiveMeasurer.getMeasurer().endEntireProcess();
+            }
+            if(includeTiming){
+                System.err.println(ActiveMeasurer.getMeasurer().toString());
             }
         } else {
             System.err.println("No file name given.");
@@ -23,39 +42,38 @@ public class Main {
     
     private static void compressFile(String file){
         try{
-            StopWatch sw = new StopWatch();
-            sw.start();
+            ActiveMeasurer.getMeasurer().startReadingFile();
             byte[] data = Files.readAllBytes(Paths.get(file));
-            sw.stop();
-            System.out.println("Time to read file: " + sw.getElapsedTime());
+            ActiveMeasurer.getMeasurer().endReadingFile();
+            ActiveMeasurer.getMeasurer().reportFileSizeBeforeCompression(data.length);
             
-            sw.start();
             CompressedFile compressedFile = CompressedFile.fromUnCompressedBytes(data);
-            sw.stop();
-            System.err.println("Time to create CompressedFile: " + sw.getElapsedTime());
-            
-            sw.start();
             byte[] compressedData = compressedFile.getCompressedDataWithHeader();
-            sw.stop();
-            System.err.println("Time to add header: " + sw.getElapsedTime());
+            ActiveMeasurer.getMeasurer().reportFileSizeAfterCompression(compressedData.length);
             
-            sw.start();
+            ActiveMeasurer.getMeasurer().startWritingFile();
             Files.write(Paths.get(file + fileSuffix), compressedData);
-            sw.stop();
-            System.err.println("Time to write file: " + sw.getElapsedTime());
+            ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
-            System.err.println("Failed to read or write file");
+            System.err.println(e.getLocalizedMessage());
         }
     }
     
     private static void unCompressFile(String file){
         try{
+            ActiveMeasurer.getMeasurer().startReadingFile();
             byte[] data = Files.readAllBytes(Paths.get(file));
+            ActiveMeasurer.getMeasurer().endReadingFile();
+            
             CompressedFile compressedFile = CompressedFile.fromCompressedBytes(data);
+            byte[] unCompressedData = compressedFile.getUnCompressedData();
+            
+            ActiveMeasurer.getMeasurer().startWritingFile();
             Files.write(Paths.get(file.substring(0, file.length() - fileSuffix.length())), 
-                    compressedFile.getUnCompressedData());
+                    unCompressedData);
+            ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
-            System.err.println("Failed to read or write file");
+            System.err.println(e.getLocalizedMessage());
         }
     }
 }

@@ -3,6 +3,7 @@ package oraisa.tiivistys.logic;
 
 import java.io.*;
 import java.util.*;
+import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 /**
  * Stores a Huffman Encoding.
@@ -17,6 +18,8 @@ public class HuffmanEncoding {
     
     public static HuffmanEncoding fromDataStream(ByteArrayInputStream stream){
         //TODO: this shouldn't read the entire stream
+        ActiveMeasurer.getMeasurer().startHeaderParsing();
+        
         byte[] bytes = new byte[stream.available()];
         stream.read(bytes, 0, bytes.length);
         BitInputStream bitStream = new BitInputStream(bytes);
@@ -32,6 +35,7 @@ public class HuffmanEncoding {
         }
         stream.skip(bytesRead);
         
+        ActiveMeasurer.getMeasurer().endHeaderParsing();
         return new HuffmanEncoding(root);
     }
     private static HuffmanTreeNode readNodes(BitInputStream stream){
@@ -87,12 +91,14 @@ public class HuffmanEncoding {
     }
     
     public void writeEncodingToOutputStream(ByteArrayOutputStream stream){
+        ActiveMeasurer.getMeasurer().startWritingHeader();
         BitOutputStream array = new BitOutputStream();
         appendNodeBitsToArray(root, array);
         byte[] bytes = array.getBytes();
         for(int i = 0; i < bytes.length; i++){
             stream.write(bytes[i]);
         }
+        ActiveMeasurer.getMeasurer().endWritingHeader();
     }
     private void appendNodeBitsToArray(HuffmanTreeNode node, BitOutputStream array){
         if(node.getLeftChild() != null){
@@ -112,11 +118,13 @@ public class HuffmanEncoding {
     }
     
     public byte[] encodeUnCompressedData(byte[] bytes){
+        ActiveMeasurer.getMeasurer().startEncodingData();
         BitOutputStream array = new BitOutputStream();
         for(byte byt: bytes){
             encodeByte(leafNodes[byt - Byte.MIN_VALUE], array);
         }
         encodeByte(stopCodeLeaf, array);
+        ActiveMeasurer.getMeasurer().endEncodingData();
         return array.getBytes();
     }
     private void encodeByte(HuffmanTreeNode node, BitOutputStream array){
@@ -133,6 +141,7 @@ public class HuffmanEncoding {
     }
     
     public byte[] decodeCompressedData(byte[] data){
+        ActiveMeasurer.getMeasurer().startDecodingData();
         BitInputStream bitStream = new BitInputStream(data);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         while(true){
@@ -146,6 +155,7 @@ public class HuffmanEncoding {
                 }
             }
             if(currentNode.isStopCode()){
+                ActiveMeasurer.getMeasurer().endDecodingData();
                 return stream.toByteArray();
             } else {
                 stream.write(currentNode.getValue());

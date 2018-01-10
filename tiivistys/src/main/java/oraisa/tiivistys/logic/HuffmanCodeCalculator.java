@@ -2,6 +2,7 @@
 package oraisa.tiivistys.logic;
 
 import java.util.Map;
+import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 /**
  * Contains the algorithm to calculate the Huffman encoding for a given 
@@ -22,6 +23,7 @@ class HuffmanCodeCalculator {
      * @see HuffmanTreeNode
      */
     static HuffmanTreeNode calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
+        ActiveMeasurer.getMeasurer().startHuffmanEncodingCalculation();
         
         HuffmanTreeNodeHeap nodes = new HuffmanTreeNodeHeap(257);
         for(Byte character: characterFrequencies.keySet()){
@@ -36,6 +38,7 @@ class HuffmanCodeCalculator {
             nodes.insert(newNode);
         }
         
+        ActiveMeasurer.getMeasurer().endHuffmanEncodingCalculation();
         return nodes.peek();
     }
 }
