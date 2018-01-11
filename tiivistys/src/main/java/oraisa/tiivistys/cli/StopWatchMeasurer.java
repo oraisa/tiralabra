@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package oraisa.tiivistys.cli;
 
 import oraisa.tiivistys.measuring.Measurer;
 
 /**
- *
- * @author ossi
+ * Measures the duration of calculations with StopWatches
  */
 public class StopWatchMeasurer implements Measurer {
     private StopWatch headerParsing = new StopWatch();
