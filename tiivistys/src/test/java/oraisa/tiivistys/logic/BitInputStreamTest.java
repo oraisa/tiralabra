@@ -5,7 +5,6 @@
  */
 package oraisa.tiivistys.logic;
 
-import oraisa.tiivistys.logic.BitInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

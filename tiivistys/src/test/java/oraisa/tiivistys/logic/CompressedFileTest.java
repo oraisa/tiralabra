@@ -1,15 +1,11 @@
 package oraisa.tiivistys.logic;
 
-import oraisa.tiivistys.logic.CompressedFile;
-import oraisa.tiivistys.logic.HuffmanTreeNode;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import java.util.*;
 
 
 public class CompressedFileTest {
@@ -20,7 +16,7 @@ public class CompressedFileTest {
     byte[] oneTwoThreeEtc;
     
     byte[] exampleData;
-    Map<Byte, Long> exampleFrequencies;
+    ByteFrequencyCollection exampleFrequencies;
 
     public CompressedFileTest() {
     }
@@ -52,7 +48,7 @@ public class CompressedFileTest {
         
         //This exaple is from https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf
         exampleData = new byte[]{1, 1, 1, 2, 3, 3, 3, 3, 4, 5, 7, 6, 6};
-        exampleFrequencies = new HashMap<Byte, Long>();
+        exampleFrequencies = new ByteFrequencyCollection();
         exampleFrequencies.put((byte)1, 3L);//h
         exampleFrequencies.put((byte)2, 1L);//a
         exampleFrequencies.put((byte)3, 4L);//p

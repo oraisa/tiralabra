@@ -1,7 +1,6 @@
 
 package oraisa.tiivistys.logic;
 
-import java.util.*;
 import java.io.*;
 import oraisa.tiivistys.measuring.*;
 

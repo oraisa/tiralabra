@@ -1,7 +1,6 @@
 
 package oraisa.tiivistys.logic;
 
-import java.util.Map;
 import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 /**

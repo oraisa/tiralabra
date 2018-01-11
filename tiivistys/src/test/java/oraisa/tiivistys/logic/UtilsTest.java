@@ -1,6 +1,5 @@
 package oraisa.tiivistys.logic;
 
-import oraisa.tiivistys.logic.Utils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

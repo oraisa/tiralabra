@@ -1,8 +1,5 @@
 package oraisa.tiivistys.logic;
 
-import oraisa.tiivistys.logic.HuffmanTreeNodeHeap;
-import oraisa.tiivistys.logic.HuffmanTreeNode;
-import java.util.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
