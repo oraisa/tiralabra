@@ -47,7 +47,9 @@ Lehden binääriesitys alkaa bitillä 1. Jos solmu ei koodaa
 pysäytyskoodia, seuraava bitti on 0 ja loput 8 bittiä
 ovat solmun koodaava tavu. Jos solmu koodaa
 pysäytyskoodin, seuraava bitti on 1 ja loput 8 ovat
-nollia.
+nollia. Otsakkeen loppuun tulee lisäksi
+nollia siten, että koko otsakkeen pituus tavuina on
+kokonaisluku.
 
 ## Aika- ja tilavaativuudet
 ### Tiedon tiivistys
