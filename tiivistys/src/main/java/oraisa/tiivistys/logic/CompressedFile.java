@@ -31,23 +31,19 @@ public class CompressedFile {
      * @return An object representing the compressed data.
      */
     public static CompressedFile fromUnCompressedBytes(byte[] bytes){
-        Map<Byte, Long> characterFrequencies = countCharacters(bytes);
+        ByteFrequencyCollection characterFrequencies = countCharacters(bytes);
         HuffmanEncoding huffmanCodes = HuffmanEncoding.fromCharacterFrequencies(characterFrequencies);
         byte[] encodedData = huffmanCodes.encodeUnCompressedData(bytes);
         CompressedFile newFile = new CompressedFile(huffmanCodes, encodedData);
         return newFile;
     }
     
-    private static Map<Byte, Long> countCharacters(byte[] bytes){
+    private static ByteFrequencyCollection countCharacters(byte[] bytes){
         ActiveMeasurer.getMeasurer().startCountingCharacters();
-        Map<Byte, Long> characterFrequencies = new HashMap<Byte, Long>();
+        ByteFrequencyCollection characterFrequencies = new ByteFrequencyCollection();
         for(int i = 0; i < bytes.length; i++){
             byte byt = bytes[i];
-            if(characterFrequencies.containsKey(byt)){
-                characterFrequencies.put(byt, characterFrequencies.get(byt) + 1);
-            } else {
-                characterFrequencies.put(byt, 1L);
-            }
+            characterFrequencies.incrementByte(byt);
         }
         ActiveMeasurer.getMeasurer().endCountingCharacters();
         return characterFrequencies;

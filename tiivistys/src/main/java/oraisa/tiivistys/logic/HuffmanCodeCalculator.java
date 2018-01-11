@@ -22,12 +22,16 @@ class HuffmanCodeCalculator {
      * given frequencies.
      * @see HuffmanTreeNode
      */
-    static HuffmanTreeNode calculateHuffmanCodes(Map<Byte, Long> characterFrequencies){
+    static HuffmanTreeNode calculateHuffmanCodes(ByteFrequencyCollection characterFrequencies){
         ActiveMeasurer.getMeasurer().startHuffmanEncodingCalculation();
         
         HuffmanTreeNodeHeap nodes = new HuffmanTreeNodeHeap(257);
-        for(Byte character: characterFrequencies.keySet()){
-            nodes.insert(new HuffmanTreeNode(character, characterFrequencies.get(character)));
+        for(int i = 0; i < characterFrequencies.size(); i++){
+            byte character = (byte)i;
+            long frequency = characterFrequencies.get(character);
+            if(frequency != 0){
+                nodes.insert(new HuffmanTreeNode(character, characterFrequencies.get(character)));
+            }
         }
         nodes.insert(HuffmanTreeNode.createStopCode());
         

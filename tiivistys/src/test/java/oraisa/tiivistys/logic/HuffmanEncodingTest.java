@@ -5,12 +5,7 @@
  */
 package oraisa.tiivistys.logic;
 
-import oraisa.tiivistys.logic.BitOutputStream;
-import oraisa.tiivistys.logic.HuffmanEncoding;
-import oraisa.tiivistys.logic.HuffmanTreeNode;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,7 +33,7 @@ public class HuffmanEncodingTest {
     HuffmanEncoding easyEncoding;
     byte[] easyEncodingInBytes;
     
-    Map<Byte, Long> exampleFrequencies;
+    ByteFrequencyCollection exampleFrequencies;
     HuffmanEncoding exampleEncoding;
     //Map<Byte, Long> characterFrequenciesInFlippedBytes;
     @Before
@@ -66,7 +61,7 @@ public class HuffmanEncodingTest {
         easyEncodingInBytes = array.getBytes();
         
         //This exaple is from https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf
-        exampleFrequencies = new HashMap<Byte, Long>();
+        exampleFrequencies = new ByteFrequencyCollection();
         exampleFrequencies.put((byte)1, 3L);//h
         exampleFrequencies.put((byte)2, 1L);//a
         exampleFrequencies.put((byte)3, 4L);//p

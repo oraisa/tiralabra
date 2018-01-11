@@ -12,7 +12,7 @@ public class HuffmanEncoding {
     
     private static final int CHARACTERS = 256;
     
-    public static HuffmanEncoding fromCharacterFrequencies(Map<Byte, Long> characterFrequencies){
+    public static HuffmanEncoding fromCharacterFrequencies(ByteFrequencyCollection characterFrequencies){
         return new HuffmanEncoding(HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequencies));
     }
     
