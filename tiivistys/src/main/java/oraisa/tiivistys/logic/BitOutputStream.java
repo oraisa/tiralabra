@@ -1,7 +1,6 @@
 
 package oraisa.tiivistys.logic;
 
-//TODO: make this a bit output stream
 /**
  * An output stream where individual bits can be written to. The bits written to
  * the stream are stored in an underlying array.
