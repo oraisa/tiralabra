@@ -11,12 +11,17 @@ public class Main {
     public static void main(String[] args){
         
         String file = "";
+        String outputFile = "";
         boolean includeTiming = false;
         for(String arg: args){
             if(arg.equals("-t")){
                 includeTiming = true;
             } else {
-                file = arg;
+                if(file.equals("")){
+                    file = arg;
+                } else {
+                    outputFile = arg;
+                }
             }
         }
         if(!file.equals("")){
@@ -25,11 +30,11 @@ public class Main {
             }
             if(file.endsWith(fileSuffix)){
                 ActiveMeasurer.getMeasurer().startEntireProcess();
-                unCompressFile(file);
+                unCompressFile(file, outputFile);
                 ActiveMeasurer.getMeasurer().endEntireProcess();
             } else {
                 ActiveMeasurer.getMeasurer().startEntireProcess();
-                compressFile(file);
+                compressFile(file, outputFile);
                 ActiveMeasurer.getMeasurer().endEntireProcess();
             }
             if(includeTiming){
@@ -40,7 +45,7 @@ public class Main {
         }
     }
     
-    private static void compressFile(String file){
+    private static void compressFile(String file, String outputFile){
         try{
             ActiveMeasurer.getMeasurer().startReadingFile();
             byte[] data = Files.readAllBytes(Paths.get(file));
@@ -52,14 +57,20 @@ public class Main {
             ActiveMeasurer.getMeasurer().reportFileSizeAfterCompression(compressedData.length);
             
             ActiveMeasurer.getMeasurer().startWritingFile();
-            Files.write(Paths.get(file + fileSuffix), compressedData);
+            Path outPath;
+            if(outputFile.equals("")){
+                outPath = Paths.get(file + fileSuffix);
+            } else {
+                outPath = Paths.get(outputFile);
+            }
+            Files.write(outPath, compressedData);
             ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
             System.err.println(e.getLocalizedMessage());
         }
     }
     
-    private static void unCompressFile(String file){
+    private static void unCompressFile(String file, String outputFile){
         try{
             ActiveMeasurer.getMeasurer().startReadingFile();
             byte[] data = Files.readAllBytes(Paths.get(file));
@@ -69,8 +80,13 @@ public class Main {
             byte[] unCompressedData = compressedFile.getUnCompressedData();
             
             ActiveMeasurer.getMeasurer().startWritingFile();
-            Files.write(Paths.get(file.substring(0, file.length() - fileSuffix.length())), 
-                    unCompressedData);
+            Path outPath;
+            if(outputFile.equals("")){
+                outPath = Paths.get(file.substring(0, file.length() - fileSuffix.length()));
+            } else {
+                outPath = Paths.get(outputFile);
+            }
+            Files.write(outPath, unCompressedData);
             ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
             System.err.println(e.getLocalizedMessage());
