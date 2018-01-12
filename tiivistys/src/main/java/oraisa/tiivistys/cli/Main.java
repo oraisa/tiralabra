@@ -1,5 +1,8 @@
 
 package oraisa.tiivistys.cli;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 public class Main {
@@ -9,9 +12,12 @@ public class Main {
         String file = "";
         String outputFile = "";
         boolean includeTiming = false;
+        boolean runPerformanceTests = false;
         for(String arg: args){
             if(arg.equals("-t")){
                 includeTiming = true;
+            } if(arg.equals("--performance-tests")){
+                runPerformanceTests = true;
             } else {
                 if(file.equals("")){
                     file = arg;
@@ -19,6 +25,14 @@ public class Main {
                     outputFile = arg;
                 }
             }
+        }
+        if(runPerformanceTests){
+            try{
+                new PerformanceTestRunner(Paths.get(file)).runPerformanceTests(5);
+            } catch(IOException e){
+                System.err.println("Failed to run performance tests: " + e.getLocalizedMessage());
+            }
+            return;
         }
         if(!file.equals("")){
             if(includeTiming){

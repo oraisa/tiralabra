@@ -34,6 +34,7 @@ public class FileProcessor {
             ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
             System.err.println(e.getLocalizedMessage());
+            System.exit(-1);
         }
     }
     
@@ -57,6 +58,7 @@ public class FileProcessor {
             ActiveMeasurer.getMeasurer().endWritingFile();
         } catch(IOException e){
             System.err.println(e.getLocalizedMessage());
+            System.exit(-1);
         }
     }
     

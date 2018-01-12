@@ -133,4 +133,24 @@ public class StopWatchMeasurer implements Measurer {
     public void endEntireProcess() {
         entireProcess.stop();
     }
+    
+    public String compressionMeasurementsCSVRow(){
+        return huffmanEncodingCalculation.getElapsedTime() + ";" + 
+                encodingData.getElapsedTime() + ";" + 
+                countingCharacters.getElapsedTime() + ";" + 
+                fileSizeBeforeCompression + ";" + 
+                fileSizeAfterCompression + "\n";
+                
+    }
+    public static final String CompressionCSVRowHeader = 
+            "Huffman Encoding Calculation;Encoding;Counting Characters;File size before;File size after\n";
+    
+    public String unCompressionMeasurementsCSVRow(){
+        return headerParsing.getElapsedTime() + ";" + 
+                decodingData.getElapsedTime() + "\n";
+    }
+    
+    public static final String UnCompressionCSVRowHeader = 
+            "Header parsing;Decoding\n";
 }
+
