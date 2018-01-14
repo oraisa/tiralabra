@@ -2,7 +2,7 @@
 package oraisa.tiivistys.cli;
 
 /**
- * A stop watch for measuring time. Uses System.currentTimeMillis to measure 
+ * A stop watch for measuring time. Uses System.nanoTime to measure 
  * time.
  */
 public class StopWatch {
@@ -15,7 +15,7 @@ public class StopWatch {
      * Start the stop watch.
      */
     public void start(){
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
         running = true;
     }
     
@@ -23,7 +23,7 @@ public class StopWatch {
      * Stop the stop watch.
      */
     public void stop(){
-        stopTime = System.currentTimeMillis();
+        stopTime = System.nanoTime();
         running = false;
     }
     
@@ -31,11 +31,11 @@ public class StopWatch {
      * Return the elapsed time. If this stop watch is running, return the time
      * elapsed between the last call to start and present. If this is not 
      * running, return the time between the latest calls to start and stop.
-     * @return The elapsed time in milliseconds.
+     * @return The elapsed time in nanoseconds.
      */
     public long getElapsedTime(){
         if(isRunning()){
-            return System.currentTimeMillis() - startTime;
+            return System.nanoTime() - startTime;
         } else {
             return stopTime - startTime;
         }
