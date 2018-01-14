@@ -22,4 +22,5 @@ public interface Measurer {
     public void endEntireProcess();
     public void reportFileSizeBeforeCompression(long bytes);
     public void reportFileSizeAfterCompression(long bytes);
+    public void reportDistinctCharacterCount(int characters);
 }

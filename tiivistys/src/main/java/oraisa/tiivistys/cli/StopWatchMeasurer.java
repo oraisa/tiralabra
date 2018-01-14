@@ -18,6 +18,7 @@ public class StopWatchMeasurer implements Measurer {
     private StopWatch entireProcess = new StopWatch();
     private long fileSizeBeforeCompression;
     private long fileSizeAfterCompression;
+    private int distinctCharacters;
 
     @Override
     public void startHeaderParsing() {
@@ -110,6 +111,11 @@ public class StopWatchMeasurer implements Measurer {
     }
     
     @Override
+    public void reportDistinctCharacterCount(int characters){
+        distinctCharacters = characters;
+    }
+    
+    @Override
     public String toString(){
         return "Time to parse header: " + headerParsing.getElapsedTime() + "\n" + 
                 "Time to create Huffman Encoding: " + huffmanEncodingCalculation.getElapsedTime() + "\n" + 
@@ -139,11 +145,13 @@ public class StopWatchMeasurer implements Measurer {
                 encodingData.getElapsedTime() + ";" + 
                 countingCharacters.getElapsedTime() + ";" + 
                 fileSizeBeforeCompression + ";" + 
-                fileSizeAfterCompression + "\n";
+                fileSizeAfterCompression + ";" + 
+                distinctCharacters + "\n";
                 
     }
     public static final String CompressionCSVRowHeader = 
-            "Huffman Encoding Calculation;Encoding;Counting Characters;File size before;File size after\n";
+            "Huffman Encoding Calculation;Encoding;Counting Characters;File size before;"
+            + "File size after;Distinct characters\n";
     
     public String unCompressionMeasurementsCSVRow(){
         return headerParsing.getElapsedTime() + ";" + 

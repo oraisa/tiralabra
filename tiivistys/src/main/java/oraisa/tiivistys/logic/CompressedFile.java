@@ -40,11 +40,14 @@ public class CompressedFile {
     private static ByteFrequencyCollection countCharacters(byte[] bytes){
         ActiveMeasurer.getMeasurer().startCountingCharacters();
         ByteFrequencyCollection characterFrequencies = new ByteFrequencyCollection();
+        int disticntCharacters = 0;
         for(int i = 0; i < bytes.length; i++){
             byte byt = bytes[i];
             characterFrequencies.incrementByte(byt);
+            disticntCharacters++;
         }
         ActiveMeasurer.getMeasurer().endCountingCharacters();
+        ActiveMeasurer.getMeasurer().reportDistinctCharacterCount(disticntCharacters);
         return characterFrequencies;
     }
 

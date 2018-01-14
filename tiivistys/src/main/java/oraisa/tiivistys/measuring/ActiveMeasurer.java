@@ -99,4 +99,8 @@ class VoidMeasurer implements Measurer{
     @Override
     public void endEntireProcess() {
     }
+
+    @Override
+    public void reportDistinctCharacterCount(int characters) {
+    }
 }
