@@ -43,8 +43,10 @@ public class CompressedFile {
         int disticntCharacters = 0;
         for(int i = 0; i < bytes.length; i++){
             byte byt = bytes[i];
+            if(characterFrequencies.get(byt) == 0){
+                disticntCharacters++;
+            }
             characterFrequencies.incrementByte(byt);
-            disticntCharacters++;
         }
         ActiveMeasurer.getMeasurer().endCountingCharacters();
         ActiveMeasurer.getMeasurer().reportDistinctCharacterCount(disticntCharacters);
