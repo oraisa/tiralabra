@@ -28,7 +28,7 @@ public class Main {
         }
         if(runPerformanceTests){
             try{
-                new PerformanceTestRunner(Paths.get(file)).runPerformanceTests(5);
+                new PerformanceTestRunner(Paths.get(file)).runPerformanceTests(20);
             } catch(IOException e){
                 System.err.println("Failed to run performance tests: " + e.getLocalizedMessage());
             }
