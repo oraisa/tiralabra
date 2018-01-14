@@ -18,28 +18,30 @@ toiminnolla. Ohjelman saamat tulokset lyötyvät kansiosta
 dokumentaatio/suorituskykytestaus. Tiedostojen nimet ovat
 kuvat-purku.csv ja kuvat-tiivistys.csv.
 
-http://corpus.canterbury.ac.nz/descriptions/
+Myös [Canterburyn korpuksen](http://corpus.canterbury.ac.nz/descriptions/)
+tiedostoja tiivistettiin ja purettiin. Täydelliset tulokset löytyvät
+tiedostoista canterbury-tiivistys ja canterbury-purku. Tiivistelmä
+tuloksista on taulukossa.
 
-Myös neljää muuta tiedostoa tiivistettiin ja purettiin.
-Tiedostot ovat kuvan
-![](https://upload.wikimedia.org/wikipedia/commons/7/74/Huffman_coding_example.svg)
+| Tiedosto | Koko | Koko tiivistettynä | Pienennys | Eri tavuja | Huffmannin kesto | Koodauksen kesto | Koodauksen purun kesto |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| alice29.txt |152 KB|88 KB|42 %|74|0,06 ms|7,5 ms|6,5 ms|
+| asyoulik.txt |125 KB|76 KB|39 %|68|0,06 ms|5,9 ms|5,3 ms|
+| bible.txt |4 MB|2,2 MB|45 %|63|0,05 ms|182 ms|166 ms|
+| cp.html |25 KB|16 KB|34 %|86|0,07 ms|1,4 ms|1,6 ms|
+| E.coli |4,6 MB|1,3 MB|72 %|4|0,03 ms|146 ms|106 ms|
+| fields.c |11 KB|7 KB|36 %|90|0,05 ms|0,63 ms|0,61 ms|
+| grammar.lsp |4 KB|2 KB|39 %|76|0,03 ms|0,17 ms|0,17 ms|
+| kennedy.xls |1 MB|463 KB|55 %|256|0,08 ms|32 ms|27 ms|
+| lcet10.txt |427 KB|251 KB|41 %|84|0,03 ms|24 ms|21 ms|
+| plrabn12.txt |482 KB|276 KB|43 %|81|0,03 ms|26 ms|22 ms|
+| ptt5 |513 KB|107 KB|79 %|159|0,06 ms|9,2 ms|9,1 ms|
+| random.txt |100 KB|75 KB|25 %|64|0,02 ms|8,0 ms|4,0 ms|
+| sum |38 KB|26 KB|32 %|255|0,08 ms|2,0 ms|1,8 ms|
+| world.txt 192 |2,5 MB|1,6 MB|37 %|94|0,03 ms|135 ms|113 ms|
+| xargs.1 |4 KB|3 KB|36 %|74|0,02 ms|0,21 ms|0,17 ms|
 
-[277x133](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Huffman_coding_example.svg/277px-Huffman_coding_example.svg.png)
-kokoinen versio png- ja bmp-tiedostoina,
-[Hamlet](https://www.gutenberg.org/files/1524/1524-0.txt)
-sekä
-[Sota ja rauha](https://www.gutenberg.org/files/2600/2600-0.txt)
-englanniksi. Tulokset ovat alla.
-
-| Tiedosto | Koko | Koko tiivistettynä | Pienennys| Koodauksen kesto | Koodauksen purun kesto |
-|:--------:|:----:|:------------------:|:--------:|:----------------:|:----:|
-| Hamlet   |205 KB|126 KB|39 %|11 ms|10 ms|
-| Sota ja rauha|3,4 MB|2 MB|42 %|156 ms|145 ms|
-| Kuva bmp |148 KB| 22KB|85 %|1,6 ms|2 ms|
-| Kuva png |4 KB|4 KB|-8 %|< 1 ms| < 1 ms|
-
-Kaikki ajat ovat keskiarvoja 20 mittauksesta. Koot ovat pyöristyksiä,
-pienennys on laskettu tarkoista koista. Huffmannin koodauksen laskemiseen
-meni lähes kaikilla mittauskerroilla alle millisekunti. Koodaus viittaa
-tiedoston tavujen korvaamiseen niiden Huffmannnin koodeilla ja koodauksen
-purku koodien korvaamiseen niitä vastaavilla tavuilla.
+Tiedostojen koot ovat pyöristettyjä. Pienennys on laskettu tarkoista
+koista. Huffman viittaa Huffmannin koodauksen määrittämiseen, koodaus
+tavujen vahtamiseen niitä vastaavilla koodeilla. Kaikki ajat ovat
+mediaaneja 20 mittauksen tuloksista.
