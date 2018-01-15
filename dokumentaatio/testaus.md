@@ -71,4 +71,31 @@ koista. Huffman viittaa Huffmannin koodauksen määrittämiseen, koodaus
 tavujen vahtamiseen niitä vastaavilla koodeilla. Kaikki ajat ovat
 mediaaneja 20 mittauksen tuloksista.
 
+Kuvien Huffmannin koodauksen määrittämisen kesto ei kannata
+lähteä vertailemaan, sillä kaikissa kuvissa on lähes sama
+määrä eri tavuja. Canterburyn korpuksen tiedostoissa on
+kuitenkin vahtelevia määriä tavuja, joten niillä vertailu
+on järkevää. Kuvaajassa näkyy koodauksen määrityksen kesto
+eri tavujen määrän funktiona. Joillain tiedostoilla on
+selvästi toteutunut pahempi tapaus koodauksesta kuin toisilla,
+mutta kesto näyttäisi riippuvan tavujen määrästä
+lineaarisesti.
 ![](kuvaajat/huffman.png)
+Mielenkiintoinen huomio on, että E.coli-tiedoston, jossa
+esiintyy vain neljää tavua, koodauksen määrittämisessä kesti
+kauemmin kuin random.txt- ja xargs.1-tiedostojen, joissa
+esiintyy 64 ja 74 eri tavua.
+
+## Yksikkötestaus
+Yksikkötestaus varmistaa, että ohjelman eri osat toimivat.
+Huomionarvoisimpia testejä on muutama.
+HuffmanEncodingTest.exampleEncodingIsOptiman testaa, että
+[esimerkin](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf)
+aakkosten frekvensseillä lasketaan koodaus, jolla
+merkkijono, jossa esiintyy aakkosia niillä frekvensseillä,
+saadaan koodattua niin lyhyeksi kuin mahdollista.
+CompressedFileTest.encodingForExampleDataIsOptimal testaa,
+että saman esimerkin merkkijono saadaan koodattua niin
+pieneksi kuin mahdollista. CompressedFile-luokan muut testit
+varmistavat, että tiedon tiivistäminen ja purkaminen
+ei muuta tietoa.
