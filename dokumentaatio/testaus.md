@@ -1,9 +1,15 @@
 # Testaus
 
 ## Suorituskykytestaus
+Suorituskykytestauksena erilaisia tiedostoja tiivistetiin
+ja purettiin. Osa tiedostoista oli tiedon
+tiivistämismenetelmien testaukseen usein käytetystä
+Canterburyn korpuksesta. Loput olivat saman kuvan eri kokoja.
+Saman kuvan käytön tarkoituksena oli saada mahdollisimman
+keskenään vertailukelpoisia tuloksia kuuvajia varten.
 
-Suorituskykytestausta tehtiin kaksi osaa. Ensin
-tämän kuvan eri kokoja tiivistettin ja purettiin.
+### Kuvat
+Testikappeleena toimi tämä kuva eri koissa.
 ![Huffmannin koodauksen visualisointi](https://upload.wikimedia.org/wikipedia/commons/a/a0/Huffman_coding_visualisation.svg)
 Kuvien koot olivat
 [320x240](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Huffman_coding_visualisation.svg/320px-Huffman_coding_visualisation.svg.png),
@@ -16,8 +22,27 @@ bmp-muotoisiksi, jotta ne eivät olisi valmiiksi
 tiivistettyjä. Tiivistys tapahtui ohjelman performance-test
 toiminnolla. Ohjelman saamat tulokset lyötyvät kansiosta
 dokumentaatio/suorituskykytestaus. Tiedostojen nimet ovat
-kuvat-purku.csv ja kuvat-tiivistys.csv.
+kuvat-purku.csv ja kuvat-tiivistys.csv. Näistä tuloksista
+tärkeimmät on esitetty kolmessa kuvaajassa.
 
+Ensimmäisessä kuvaajassa näkyy, kuinka paljon kukin tiedosto
+pieneni tiedoston alkuperäisen koon funktiona. Suuremmat
+tiedostot näyttävät pinentyvän hieman enemmän kuin pienemmät,
+mutta erot ovat hyvin pieniä.
+![](kuvaajat/pienennys.png)
+
+Seuraavassa kuvaajassa näkyy tiedoston tavujen korvaamiseen
+niitä vastaavalla Huffmannin koodilla kulunut aika tiedoston
+koon funktiona. Odotetusti aika riippuu koosta lineaarisesti.
+![](kuvaajat/koodaus.png)
+
+Viimeisessä kuvaajassa näkyy Huffmannin koodien korvaamiseen
+niitä vastaavilla tavuilla kulunut aika tiivistetyn
+tiedoston koon funktiona. Sekin riippuu
+odotetusti tiedoston koosta lineaarisesti.
+![](kuvaajat/koodauksen-purku.png)
+
+### Canterburyn korpus
 Myös [Canterburyn korpuksen](http://corpus.canterbury.ac.nz/descriptions/)
 tiedostoja tiivistettiin ja purettiin. Täydelliset tulokset löytyvät
 tiedostoista canterbury-tiivistys ja canterbury-purku. Tiivistelmä
@@ -45,3 +70,5 @@ Tiedostojen koot ovat pyöristettyjä. Pienennys on laskettu tarkoista
 koista. Huffman viittaa Huffmannin koodauksen määrittämiseen, koodaus
 tavujen vahtamiseen niitä vastaavilla koodeilla. Kaikki ajat ovat
 mediaaneja 20 mittauksen tuloksista.
+
+![](kuvaajat/huffman.png)
