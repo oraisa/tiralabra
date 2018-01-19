@@ -226,7 +226,9 @@ määrittää tiivistysten ja purkujen toistojen määrät.
 Komentoriviltä ei myöskään voi saada mitään käyttöohjeita.
 -t-vivun kanssa ohjelma tulostaa tällä hetkellä sekä
 tiivistämiseen että purkamiseen liittyviä aikoja riippumatta
-siitä, puretaanko vai tiivistetäänkö.
+siitä, puretaanko vai tiivistetäänkö. Ohjelma myös
+ylikirjoittaa mahdolliset jo olemassaolevat tiedostot
+kysymättä käyttäjältä.
 
 Ohjelma ei tällä hetkellä pysty tiivistämään eikä purkamaan
 mielivaltaisen kokoista tiedosto, sillä tiedoston pitäisi
