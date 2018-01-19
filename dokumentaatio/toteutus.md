@@ -228,6 +228,15 @@ Komentoriviltä ei myöskään voi saada mitään käyttöohjeita.
 tiivistämiseen että purkamiseen liittyviä aikoja riippumatta
 siitä, puretaanko vai tiivistetäänkö.
 
+Ohjelma ei tällä hetkellä pysty tiivistämään eikä purkamaan
+mielivaltaisen kokoista tiedosto, sillä tiedoston pitäisi
+sekä mahtua muistiin että javan taulukkoon, joka
+käyttää 32-bittistä indeksiä. Taulukon voisi korvata
+omalla taulukolla, jolla voisi käyttää suurempia indeksejä.
+Muistin loppumisen voisi estää sillä, että koko tiedostoa
+ei lueta kerralla muistiin. Tällöin tosin tiedosto tosin
+pitäisi lukea levyltä kaksi kertaa tiivistettäessä.
+
 Koodissa on myös varmasti paljon optimoitavaa.
 
 ## Lähteet
