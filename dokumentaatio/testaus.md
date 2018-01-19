@@ -86,6 +86,19 @@ esiintyy vain neljää tavua, koodauksen määrittämisessä kesti
 kauemmin kuin random.txt- ja xargs.1-tiedostojen, joissa
 esiintyy 64 ja 74 eri tavua.
 
+### Vertailu zipin kanssa
+Joitain tiedostoja tiivistettiin ja purettiin myös
+zipillä vertailun vuoksi.
+
+| Tiedosto | Koko | Koko tiiv | Koko zip | Pienennys tiiv | Pienennys zip |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 1280 kuva |3,7 MB|575 KB|87 KB|84,4 %|97,6 %|
+| alice29.txt |152 KB|88 KB|55 KB|42,3 %|63,8 %|
+| bible.txt |4 MB|2,2 MB|1,2 MB|45,2 %|70,5 %|
+| E.coli |4,6 MB|1,3 MB|1,3 MB|71,9 %|71,1 %|
+| lcet10.txt |427 KB|251 KB|145 KB|41,3 %|65,9 %|
+| sum |38 KB|26 KB|14 KB|32,0 %|64,6 %|
+
 ## Yksikkötestaus
 Yksikkötestaus varmistaa, että ohjelman eri osat toimivat.
 Huomionarvoisimpia testejä on muutama.
