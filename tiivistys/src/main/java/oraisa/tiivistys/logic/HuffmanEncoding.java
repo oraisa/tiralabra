@@ -11,10 +11,20 @@ public class HuffmanEncoding {
     
     private static final int CHARACTERS = 256;
     
+    /**
+     * Create an encoding from byte frequencies.
+     * @param characterFrequencies A ByteFrequencyCollection.
+     * @return The encoding created from the frequencies.
+     */
     public static HuffmanEncoding fromCharacterFrequencies(ByteFrequencyCollection characterFrequencies){
         return new HuffmanEncoding(HuffmanCodeCalculator.calculateHuffmanCodes(characterFrequencies));
     }
     
+    /**
+     * Read an encoding from the start of the stream.
+     * @param stream The stream to read.
+     * @return The encoding read.
+     */
     public static HuffmanEncoding fromDataStream(ByteArrayInputStream stream){
         //TODO: this shouldn't read the entire stream
         ActiveMeasurer.getMeasurer().startHeaderParsing();
@@ -89,6 +99,10 @@ public class HuffmanEncoding {
         }
     }
     
+    /**
+     * Write this encoding to an output steam.
+     * @param stream The stream to write the encoding to.
+     */
     public void writeEncodingToOutputStream(ByteArrayOutputStream stream){
         ActiveMeasurer.getMeasurer().startWritingHeader();
         BitOutputStream array = new BitOutputStream();
@@ -116,6 +130,11 @@ public class HuffmanEncoding {
         }
     }
     
+    /**
+     * Encode uncompressed bytes with this encoding.
+     * @param bytes The bytes to encode.
+     * @return The encoded bytes.
+     */
     public byte[] encodeUnCompressedData(byte[] bytes){
         ActiveMeasurer.getMeasurer().startEncodingData();
         BitOutputStream array = new BitOutputStream();
@@ -139,6 +158,11 @@ public class HuffmanEncoding {
         }
     }
     
+    /**
+     * Decode bytes compressed with this encoding.
+     * @param data The bytes to decode.
+     * @return The decoded bytes.
+     */
     public byte[] decodeCompressedData(byte[] data){
         ActiveMeasurer.getMeasurer().startDecodingData();
         BitInputStream bitStream = new BitInputStream(data);
@@ -163,6 +187,9 @@ public class HuffmanEncoding {
     }
 }
 
+/**
+ * A node of an Huffman encoding tree.
+ */
 class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
     private HuffmanTreeNode leftChild = null;
     private HuffmanTreeNode rightChild = null;

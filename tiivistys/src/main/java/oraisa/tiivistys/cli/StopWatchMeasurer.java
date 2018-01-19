@@ -140,6 +140,10 @@ public class StopWatchMeasurer implements Measurer {
         entireProcess.stop();
     }
     
+    /**
+     * Get a CSV row with the results of compression.
+     * @return The CSV row of the compression results.
+     */
     public String compressionMeasurementsCSVRow(){
         return huffmanEncodingCalculation.getElapsedTime() + ";" + 
                 encodingData.getElapsedTime() + ";" + 
@@ -149,15 +153,25 @@ public class StopWatchMeasurer implements Measurer {
                 distinctCharacters + "\n";
                 
     }
+    /**
+     * The header for the CSV row returned by compressionMeasurementsCSVRow.
+     */
     public static final String CompressionCSVRowHeader = 
             "Huffman Encoding Calculation;Encoding;Counting Characters;File size before;"
             + "File size after;Distinct characters\n";
     
+    /**
+     * Get a CSV row with the results of uncompression.
+     * @return The CSV row with the results.
+     */
     public String unCompressionMeasurementsCSVRow(){
         return headerParsing.getElapsedTime() + ";" + 
                 decodingData.getElapsedTime() + "\n";
     }
     
+    /**
+     * The header for a CSV row returned by unCompressionMeasurementsCSVRow.
+     */
     public static final String UnCompressionCSVRowHeader = 
             "Header parsing;Decoding\n";
 }

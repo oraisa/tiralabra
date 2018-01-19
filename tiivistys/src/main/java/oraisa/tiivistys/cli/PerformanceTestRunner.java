@@ -7,11 +7,19 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import oraisa.tiivistys.measuring.ActiveMeasurer;
 
+/**
+ * Runs performance tests.
+ */
 public class PerformanceTestRunner {
     private final Path testDirectory;
     private final Path compressedFileDirectory;
     private static final String compressedFileDirectoryName = "compressed-files";
     
+    /**
+     * Constructor.
+     * @param testDirectory The directory where the test files are.
+     * @throws IOException 
+     */
     public PerformanceTestRunner(Path testDirectory)throws IOException { 
         this.compressedFileDirectory = testDirectory.resolve(Paths.get(compressedFileDirectoryName));
         if(!Files.exists(this.compressedFileDirectory)){
@@ -20,6 +28,11 @@ public class PerformanceTestRunner {
         this.testDirectory = testDirectory;
     }
     
+    /**
+     * Run the tests.
+     * @param times How many repetitions to do for each file.
+     * @throws IOException 
+     */
     public void runPerformanceTests(int times) throws IOException{
         String compressionTestResultCSV = "File;" + StopWatchMeasurer.CompressionCSVRowHeader;
         String unCompressionTestResultCSV = "File;" + StopWatchMeasurer.UnCompressionCSVRowHeader;

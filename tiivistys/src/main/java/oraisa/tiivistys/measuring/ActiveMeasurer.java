@@ -1,13 +1,25 @@
 
 package oraisa.tiivistys.measuring;
 
+/**
+ * Manages the currently active measurer.
+ */
 public class ActiveMeasurer {
     private ActiveMeasurer(){}
     
     private static Measurer activeMeasurer = new VoidMeasurer();
+    /**
+     * Get the currently active measurer. If no measurer has been set, returns
+     * a measurer whole methods do nothing.
+     * @return The currently active measurer,
+     */
     public static Measurer getMeasurer(){
         return activeMeasurer;
     }
+    /**
+     * Set the currently active measurer.
+     * @param measurer The measurer to set active.
+     */
     public static void setActiveMeasurer(Measurer measurer){
         activeMeasurer = measurer;
     }
@@ -16,7 +28,6 @@ public class ActiveMeasurer {
 /**
  * A measurer that doesn't actually measure anything. Used as a default if no
  * measurer has been set.
- * @author ossi
  */
 class VoidMeasurer implements Measurer{
 

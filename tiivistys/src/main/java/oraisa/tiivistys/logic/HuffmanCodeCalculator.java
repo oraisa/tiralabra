@@ -15,8 +15,7 @@ class HuffmanCodeCalculator {
      * codes is a HuffmanTreeNode with the stop code variable set to true. The
      * pattern of that node should be used to mark the of a file encoded with 
      * the returned encoding.
-     * @param characterFrequencies A Map with a byte as the key and the frequency
-     *                             of that byte as value.
+     * @param characterFrequencies A ByteFrequencyCollection.
      * @return The root HuffmanTreeNode of the Huffman encoding tree for the 
      * given frequencies.
      * @see HuffmanTreeNode

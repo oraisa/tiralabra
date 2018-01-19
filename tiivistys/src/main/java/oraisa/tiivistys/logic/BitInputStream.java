@@ -36,7 +36,6 @@ public class BitInputStream {
         return getBitAtPositionInShort(position % 8 + 8, (short)byt);
     }
 
-    //TODO: this can probably be optimised
     private byte getBitAtPositionInShort(long position, short shor){
         if(position >= 16){
             throw new IllegalArgumentException("Position " + position + " >= 16.");

@@ -9,9 +9,16 @@ import oraisa.tiivistys.logic.CompressedFile;
 import oraisa.tiivistys.measuring.ActiveMeasurer;
 
 public class FileProcessor {
-    
+    /**
+     * The default suffix of a compressed file.
+     */
     public static final String fileSuffix = ".tiiv";
     
+    /**
+     * Compress a file.
+     * @param file The file to compress.
+     * @param outputFile The file name of the output file.
+     */
     public static void compressFile(String file, String outputFile){
         try{
             ActiveMeasurer.getMeasurer().startReadingFile();
@@ -38,6 +45,11 @@ public class FileProcessor {
         }
     }
     
+    /**
+     * Uncompress a file.
+     * @param file The file to uncompress.
+     * @param outputFile The output file name.
+     */
     public static void unCompressFile(String file, String outputFile){
         try{
             ActiveMeasurer.getMeasurer().startReadingFile();
