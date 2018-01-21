@@ -10,5 +10,8 @@ Lisäksi tein vertailun tiedoston pienennyksestä zipin kanssa
 ja lisäsin kommentteja koodiin ja generoin javadocin.
 Aikaa meni noin 3,5 tuntia.
 
+## 21.1
+Tänään viimeistelin projektia. Aikaa meni noin puoli tuntia.
+
 ## Ajankäyttö
-Aikaa meni yhteensä noin 5 tuntia.
+Aikaa meni yhteensä noin 5,5 tuntia.
