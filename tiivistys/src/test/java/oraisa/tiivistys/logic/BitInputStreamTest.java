@@ -67,19 +67,4 @@ public class BitInputStreamTest {
         assertEquals(1, stream.readBit());
         assertEquals(0, stream.readBit());
     }
-    
-    @Test
-    public void streamReportsCorrectNumberOfBitsRemainingAfterCreation(){
-        BitInputStream stream = new BitInputStream(new byte[2]);
-        assertEquals(16, stream.bitsLeft());
-    }
-    
-    @Test
-    public void streamReportsCorrectNumberOfBitsRemaningAfterReading(){
-        BitInputStream stream = new BitInputStream(new byte[2]);
-        stream.readBit();
-        stream.readBit();
-        stream.readBit();
-        assertEquals(13, stream.bitsLeft());
-    }
 }

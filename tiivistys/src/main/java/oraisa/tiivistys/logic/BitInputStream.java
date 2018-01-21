@@ -1,13 +1,16 @@
 
 package oraisa.tiivistys.logic;
 
+import java.io.ByteArrayInputStream;
+
 /**
- * An input stream read one bit at a time. The bits are read from an underlying 
- * byte array specified by the constructor.
+ * An input stream to read one bit at a time. The bits are read from an underlying 
+ * ByteArrayInputStream specified by the constructor.
  */
 public class BitInputStream {
     
-    private byte[] bytes;
+    private ByteArrayInputStream bytes;
+    private byte buffer;
     private long bitPosition = 0;
 
     /**
@@ -15,28 +18,18 @@ public class BitInputStream {
      * @param bytes An array of bytes representing the binary data that is read from.
      */
     public BitInputStream(byte[] bytes){
-        this.bytes = bytes;
+        this.bytes = new ByteArrayInputStream(bytes);
     }
     
     /**
-     * Return how many bits of data are left.
-     * @return The amount of bits left in the data.
+     * Class constructor.
+     * @param stream A ByteArrayInputStream containing the bits to read.
      */
-    public long bitsLeft(){
-        return bytes.length * 8 - bitPosition;
+    public BitInputStream(ByteArrayInputStream stream){
+        this.bytes = stream;
     }
 
-    private byte getBitAtBitPosition(long position){
-        if(position >= bytes.length * 8){
-            throw new IllegalArgumentException("Position " + position + " is outside the data.");
-        } else if(position < 0){
-            throw new IllegalArgumentException("Negative position");
-        }
-        byte byt = bytes[(int)(position / 8)];
-        return getBitAtPositionInByte(position % 8, byt);
-    }
-
-    private byte getBitAtPositionInByte(long position, byte byt){
+    private int getBitAtPositionInByte(long position, byte byt){
         int mask = 1 << (8 - (position + 1));
         int result = byt & mask;
         if(result == 0){
@@ -51,6 +44,11 @@ public class BitInputStream {
      * @return The next bit of data.
      */
     public int readBit(){
-        return getBitAtBitPosition(bitPosition++);
+        if(bitPosition % 8 == 0){
+            buffer = (byte)bytes.read();
+        }
+        long oldPosition = bitPosition;
+        bitPosition += 1;
+        return getBitAtPositionInByte(oldPosition % 8, buffer);
     }
 }

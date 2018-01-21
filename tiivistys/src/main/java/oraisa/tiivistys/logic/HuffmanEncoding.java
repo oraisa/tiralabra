@@ -26,24 +26,9 @@ public class HuffmanEncoding {
      * @return The encoding read.
      */
     public static HuffmanEncoding fromDataStream(ByteArrayInputStream stream){
-        //TODO: this shouldn't read the entire stream
         ActiveMeasurer.getMeasurer().startHeaderParsing();
-        
-        byte[] bytes = new byte[stream.available()];
-        stream.read(bytes, 0, bytes.length);
-        BitInputStream bitStream = new BitInputStream(bytes);
-        stream.reset();
-        long bitsInDataStream = bitStream.bitsLeft();
-        
+        BitInputStream bitStream = new BitInputStream(stream);
         HuffmanTreeNode root = readNodes(bitStream);
-        
-        long bitsRead = bitsInDataStream - bitStream.bitsLeft();
-        long bytesRead = bitsRead / 8;
-        if(bitsRead % 8 != 0){
-            bytesRead += 1;
-        }
-        stream.skip(bytesRead);
-        
         ActiveMeasurer.getMeasurer().endHeaderParsing();
         return new HuffmanEncoding(root);
     }
