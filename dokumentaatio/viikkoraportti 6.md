@@ -11,3 +11,4 @@ ja lisäsin kommentteja koodiin ja generoin javadocin.
 Aikaa meni noin 3,5 tuntia.
 
 ## Ajankäyttö
+Aikaa meni yhteensä noin 5 tuntia.
