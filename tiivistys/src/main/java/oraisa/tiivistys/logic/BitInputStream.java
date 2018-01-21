@@ -33,17 +33,12 @@ public class BitInputStream {
             throw new IllegalArgumentException("Negative position");
         }
         byte byt = bytes[(int)(position / 8)];
-        return getBitAtPositionInShort(position % 8 + 8, (short)byt);
+        return getBitAtPositionInByte(position % 8, byt);
     }
 
-    private byte getBitAtPositionInShort(long position, short shor){
-        if(position >= 16){
-            throw new IllegalArgumentException("Position " + position + " >= 16.");
-        } else if(position < 0){
-            throw new IllegalArgumentException("Negative position");
-        }
-        int mask = 1 << (16 - (position + 1));
-        int result = shor & mask;
+    private byte getBitAtPositionInByte(long position, byte byt){
+        int mask = 1 << (8 - (position + 1));
+        int result = byt & mask;
         if(result == 0){
             return 0;
         } else {
