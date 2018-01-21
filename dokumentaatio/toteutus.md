@@ -244,5 +244,7 @@ Koodissa on myös varmasti paljon optimoitavaa.
 ## Lähteet
 
 1.[https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1126/handouts/220%20Huffman%20Encoding.pdf)
+
 2.[http://math.mit.edu/~goemans/18310S15/huffman-notes.pdf](http://math.mit.edu/~goemans/18310S15/huffman-notes.pdf)
+
 3.[https://en.wikipedia.org/wiki/Huffman_coding](https://en.wikipedia.org/wiki/Huffman_coding)
